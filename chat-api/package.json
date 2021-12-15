@@ -1,0 +1,18 @@
+{
+  "name": "chat-api",
+  "version": "1.0.0",
+  "description": "basic chat api",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*"
+  },
+  "devDependencies": {
+    "nodemon": "*"
+  },
+  "author": "Roman Vinnick",
+  "license": "ISC"
+}
