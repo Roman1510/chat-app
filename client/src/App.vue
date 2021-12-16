@@ -4,6 +4,7 @@
       <div class="column green">
         <p>Username: {{ username }}</p>
         <p>Online:{{ users.length }}</p>
+        <ChatRoom :messages="messages" />
       </div>
     </div>
   </div>
@@ -11,9 +12,10 @@
 
 <script>
 import io from 'socket.io-client'
+import ChatRoom from './components/ChatRoom.vue'
 export default {
   name: 'app',
-  components: {},
+  components: { ChatRoom },
   data: function () {
     return {
       username: '',
@@ -29,13 +31,27 @@ export default {
         this.users = data.users
         this.socket.emit('newuser', this.username)
       })
+      this.listen()
+    },
+    listen: function () {
+      this.socket.on('userOnline', (user) => {
+        this.users.push(user)
+      })
+
+      this.socket.on('userLeft', (user) => {
+        this.users.splice(this.users.indexOf(user), 1)
+      })
+      this.socket.on('msg', (message) => {
+        this.messages.push(message)
+      })
+    },
+    sendMessage: function (message) {
+      this.socket.emit('msg', message)
     },
   },
   mounted: function () {
-    this.username = prompt('what is your username', 'anonymous')
-
     if (!this.username) {
-      this.username = 'anonymous'
+      this.username = prompt('what is your username', 'anonymous')
     }
 
     this.joinServer()
