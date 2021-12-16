@@ -1,12 +1,19 @@
 const app = require('express')()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const cors = require('cors')
+const http = require('http').Server(app.use(cors))
+const io = require('socket.io')(http, {
+  cors: {
+    origin: "http://localhost:8080",
+    methods: ["GET", "POST"]
+  }
+})
 
 let users = []
 let messages = []
 let index = 0
 
 io.on('connection', (socket) => {
+  console.log('connection tried something')
   socket.emit('loggedIn', {
     users: users.map((s) => s.username),
     messages: messages,
