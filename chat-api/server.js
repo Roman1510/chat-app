@@ -7,20 +7,17 @@ const io = require('socket.io')(http, {
     methods: ["GET", "POST"]
   }
 })
-
 let users = []
 let messages = []
 let index = 0
-
 io.on('connection', (socket) => {
-  console.log('connection tried something')
   socket.emit('loggedIn', {
     users: users.map((s) => s.username),
     messages: messages,
   })
 
   socket.on('newuser', (username) => {
-    console.log(`${socket.username} has entered the party`)
+    console.log(`${username} has entered the party`)
     socket.username = username
     users.push(socket)
 
