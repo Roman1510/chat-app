@@ -1,32 +1,31 @@
 <template lang="">
   <div class="container">
-    <div class="box" v-for="message in messages" :key="message.index">
+    <div class="box" v-for="item in messages" :key="item.index">
       <div>
-        {{ message.username }}
+        {{ item.username }}
       </div>
       <div>
-        {{ message.msg }}
+        {{ item.msg }}
       </div>
     </div>
   </div>
   <form class="form">
-    <input type="text" v-model="msg" @submit.prevent="sendMessage" />
-    <button @click.prevent="sendMessage" class="button">
-      Send
-    </button>
+    <input type="text" v-model="msg" />
+    <button @click.prevent="sendMessage" class="button">Send</button>
   </form>
 </template>
 <script>
 export default {
   name: 'chatroom',
   props: ['messages'],
-  date: function () {
+  data: function () {
     return {
       msg: '',
     }
   },
   methods: {
     sendMessage: function () {
+      console.log(this.messages)
       if (!this.msg) {
         alert('please enter a message')
         return
