@@ -4,7 +4,7 @@
       <div class="column green">
         <p>Username: {{ username }}</p>
         <p>Online:{{ users.length }}</p>
-        <ChatRoom :messages="messages" />
+        <ChatRoom :messages="messages" @sendMessage="sendMessage" />
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@ export default {
       })
     },
     sendMessage: function (message) {
+      console.log('message was sent', message)
       this.socket.emit('msg', message)
     },
   },

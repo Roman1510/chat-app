@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('msg', (msg) => {
+    console.log(msg)
     let message = {
       index: index,
       username: socket.username,

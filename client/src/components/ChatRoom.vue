@@ -18,6 +18,8 @@
 export default {
   name: 'chatroom',
   props: ['messages'],
+
+  emits: ['sendMessage'],
   data: function () {
     return {
       msg: '',
@@ -25,7 +27,6 @@ export default {
   },
   methods: {
     sendMessage: function () {
-      console.log(this.messages)
       if (!this.msg) {
         alert('please enter a message')
         return
