@@ -16,6 +16,7 @@ import ChatRoom from './components/ChatRoom.vue'
 export default {
   //1. show the list of users
   //2. make new styling
+  //2.1 make styling for modal prompt + localstorage to store the user's info (at least the name, that the particular name is online)
   //3. show in the chat when someone joins
   //4. show in the chat when someone leaves
   //5. make the sounds
