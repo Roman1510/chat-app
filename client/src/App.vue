@@ -14,6 +14,15 @@
 import io from 'socket.io-client'
 import ChatRoom from './components/ChatRoom.vue'
 export default {
+  //1. show the list of users
+  //2. make new styling
+  //3. show in the chat when someone joins
+  //4. show in the chat when someone leaves
+  //5. make the sounds
+  //6. deploy to cloud
+  //7. make history to be saved on client's side. (with the button to reset)
+  //8. make the possibility to send files 
+  //9. connect the db to store users / auth
   name: 'app',
   components: { ChatRoom },
   data: function () {

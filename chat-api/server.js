@@ -17,7 +17,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('newuser', (username) => {
-    console.log(`${username} has entered the party`)
     socket.username = username
     users.push(socket)
 
@@ -25,7 +24,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('msg', (msg) => {
-    console.log(msg)
     let message = {
       index: index,
       username: socket.username,
@@ -47,3 +45,5 @@ io.on('connection', (socket) => {
 http.listen(process.env.port || 3000, () => {
   console.log('listening on port %s', process.env.port || 3000)
 })
+
+
