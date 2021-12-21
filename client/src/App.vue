@@ -13,6 +13,8 @@
 <script>
 import io from 'socket.io-client'
 import ChatRoom from './components/ChatRoom.vue'
+import SocketConnect from './utilities/SocketConnect'
+const { sendSocket } = SocketConnect
 export default {
   //1. show the list of users
   //2. make new styling
@@ -22,9 +24,8 @@ export default {
   //5. make the sounds
   //6. deploy to cloud
   //7. make history to be saved on client's side. (with the button to reset)
-  //8. make the possibility to send files 
+  //8. make the possibility to send files
   //9. connect the db to store users / auth
-
 
   /* 
   
@@ -45,28 +46,11 @@ export default {
   },
   methods: {
     joinServer: function () {
-      this.socket.on('loggedIn', (data) => {
-        this.messages = data.messages
-        this.users = data.users
-        this.socket.emit('newuser', this.username)
-      })
-      this.listen()
-    },
-    listen: function () {
-      this.socket.on('userOnline', (user) => {
-        this.users.push(user)
-      })
-
-      this.socket.on('userLeft', (user) => {
-        this.users.splice(this.users.indexOf(user), 1)
-      })
-      this.socket.on('msg', (message) => {
-        this.messages.push(message)
-      })
+      SocketConnect(this.username)
     },
     sendMessage: function (message) {
       console.log('message was sent', message)
-      this.socket.emit('msg', message)
+      sendSocket(message)
     },
   },
   mounted: function () {
