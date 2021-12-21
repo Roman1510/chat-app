@@ -12,9 +12,9 @@ const loggedIn = (username) => {
   listen()
 }
 
-export const listen = (cb) => {
-  socket.on('userOnline', (user) => {
-    users.push(user)
+export const listen = (username, cb) => {
+  socket.on('userOnline', (username) => {
+    users.push(username)
   })
 
   socket.on('userLeft', (user) => {
@@ -22,12 +22,10 @@ export const listen = (cb) => {
   })
 
   socket.on('msg', (message) => {
+    console.log(message)
     messages.push(message)
+    cb&&cb(messages,users)
   })
-  if(cb){
-    cb(messages,users)
-  }
-  
 }
 
 export const establishWS = (username) => {

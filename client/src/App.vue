@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
 import ChatRoom from './components/ChatRoom.vue'
 import { sendSocket, establishWS, listen } from './utilities/SocketConnect.js'
 export default {
@@ -38,26 +37,25 @@ export default {
   data: function () {
     return {
       username: '',
-      socket: io('http://localhost:3000'),
       messages: [],
       users: [],
     }
   },
   methods: {
     sendMessage: function (message) {
-      console.log('message was sent', message)
       sendSocket(message)
     },
+    updateDataWS: function (messages,users) {
+      this.messages = messages
+      this.users = users
+    }
   },
   mounted: function () {
     if (!this.username) {
       this.username = prompt('what is your username', 'anonymous')
     }
     establishWS(this.username)
-    listen((messages, users) => {
-      this.messages = messages
-      this.users = users
-    })
+    listen(this.username, (messages, users) => this.updateDataWS(messages,users))
   },
 }
 </script>
