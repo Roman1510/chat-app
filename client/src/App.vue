@@ -24,12 +24,21 @@ export default {
   //7. make history to be saved on client's side. (with the button to reset)
   //8. make the possibility to send files 
   //9. connect the db to store users / auth
+
+
+  /* 
+  
+    1)move credentials to env file
+    2)put socket operations in a separate file
+    3)update the variables from the external file reactively
+
+  */
   name: 'app',
   components: { ChatRoom },
   data: function () {
     return {
       username: '',
-      socket: io('localhost:3000'),
+      socket: io('http://localhost:3000'),
       messages: [],
       users: [],
     }
