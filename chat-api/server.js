@@ -3,9 +3,8 @@ const cors = require('cors')
 const http = require('http').Server(app.use(cors))
 const io = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:8080",
-    methods: ["GET", "POST"]
-  }
+    origin: '*'
+  },
 })
 let users = []
 let messages = []
@@ -45,5 +44,3 @@ io.on('connection', (socket) => {
 http.listen(process.env.port || 3000, () => {
   console.log('listening on port %s', process.env.port || 3000)
 })
-
-
