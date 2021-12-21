@@ -13,8 +13,7 @@
 <script>
 import io from 'socket.io-client'
 import ChatRoom from './components/ChatRoom.vue'
-import SocketConnect from './utilities/SocketConnect'
-const { sendSocket } = SocketConnect
+import { sendSocket, establishWS, listen } from './utilities/SocketConnect.js'
 export default {
   //1. show the list of users
   //2. make new styling
@@ -45,9 +44,6 @@ export default {
     }
   },
   methods: {
-    joinServer: function () {
-      SocketConnect(this.username)
-    },
     sendMessage: function (message) {
       console.log('message was sent', message)
       sendSocket(message)
@@ -57,8 +53,11 @@ export default {
     if (!this.username) {
       this.username = prompt('what is your username', 'anonymous')
     }
-
-    this.joinServer()
+    establishWS(this.username)
+    listen((messages, users) => {
+      this.messages = messages
+      this.users = users
+    })
   },
 }
 </script>
