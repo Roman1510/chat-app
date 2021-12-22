@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
   socket.on('newuser', (username) => {
     socket.username = username
     users.push(socket)
-
+    console.log(socket.username, ' now online')
     io.emit('userOnline', socket.username)
   })
 
@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
       msg: msg,
     }
     messages.push(message)
+    console.log('the message was sent: ',message)
     io.emit('msg', message)
     index++
   })

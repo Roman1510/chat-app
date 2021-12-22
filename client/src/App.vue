@@ -12,7 +12,7 @@
 
 <script>
 import ChatRoom from './components/ChatRoom.vue'
-import { sendSocket, listen } from './utilities/SocketConnect.js'
+import { sendSocket, loggedIn } from './utilities/SocketConnect.js'
 export default {
   //1. show the list of users
   //2. make new styling
@@ -46,17 +46,15 @@ export default {
       sendSocket(message)
     },
     updateDataWS: function (messages, users) {
-      console.log('this is the messages that came', messages)
       this.messages = [...messages]
       this.users = [...users]
-      console.log('messsages after the update', this.messages)
     },
   },
   mounted: function () {
     if (!this.username) {
       this.username = prompt('what is your username', 'anonymous')
     }
-    listen(this.username, (messages, users) => {
+    loggedIn(this.username, (messages, users) => {
       this.updateDataWS(messages, users)
     })
   },
