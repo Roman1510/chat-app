@@ -2,12 +2,13 @@ import io from 'socket.io-client'
 var messages = []
 var users = []
 const socket = io('http://localhost:3000')
-const loggedIn = (username) => {
+const loggedIn = (username, cb) => {
   socket.on('loggedIn', (data) => {
     //here we ge the initial data
     messages = data.messages
     users = data.users
     socket.emit('newuser', username)
+    cb && cb(messages, users)
   })
   listen()
 }
@@ -22,9 +23,8 @@ export const listen = (username, cb) => {
   })
 
   socket.on('msg', (message) => {
-    console.log(message)
     messages.push(message)
-    cb&&cb(messages,users)
+    cb && cb(messages, users)
   })
 }
 
