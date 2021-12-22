@@ -1,10 +1,9 @@
 import io from 'socket.io-client'
 let messages = []
 let users = []
-const socket = io('http://localhost:3000')
+const socket = io(process.env.VUE_APP_WS_URL)
 export const loggedIn = (username, cb) => {
   socket.on('loggedIn', (data) => {
-    //here we ge the initial data
     messages = data.messages
     users = data.users
     socket.emit('newuser', username)
@@ -16,7 +15,6 @@ export const loggedIn = (username, cb) => {
 
 export const listen = (username, cb) => {
   socket.on('userOnline', (username) => {
-    console.log('user became online',username)
     users.push(username)
     cb && cb(messages, users)
   })
