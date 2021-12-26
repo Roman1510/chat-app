@@ -11,7 +11,7 @@
   </div>
   <form class="form">
     <input type="text" v-model="msg" />
-    <button @click.prevent="sendMessage" class="button">Send</button>
+    <button @click.prevent="sendMessage" class="button is-primary">Send</button>
   </form>
 </template>
 <script>
