@@ -1,17 +1,20 @@
 <template>
-	<div class="hero is-fullheight">
-		<div class="hero-body">
-			<p>Username: {{ username }}</p>
-			<p>Online:{{ users.length }}</p>
-			<ChatRoom :messages="messages" @sendMessage="sendMessage" />
+	<form class="box">
+		<div class="field">
+			<label class="label">Username: {{ username }}</label>
 		</div>
-	</div>
+		<div class="field">
+			<label class="label">Online:{{ users.length }}</label>
+		</div>
+		<button class="button is-primary" @click.prevent="signOut">Log out</button>
+	</form>
+	<ChatRoom :messages="messages" @sendMessage="sendMessage" />
 	<div class="modal" :class="{ 'is-active': modalIsActive }">
 		<div class="modal-background"></div>
 		<div class="modal-card">
 			<header class="modal-card-head">
 				<p class="modal-card-title">Please fill in the name:</p>
-				<button class="delete" aria-label="close"></button>
+				<button class="delete" @click.prevent="closeModal" aria-label="close"></button>
 			</header>
 			<section class="modal-card-body">
 				<div class="columns is-centered">
@@ -21,10 +24,10 @@
 				</div>
 			</section>
 			<footer class="modal-card-foot">
-				<button class="button is-success" @click.prevent="changeUser">
+				<button class="button is-success" @click.prevent="setUsername">
 					Save changes
 				</button>
-				<button class="button" @click.prevent="cancelModal">Cancel</button>
+				<button class="button" @click.prevent="closeModal">Cancel</button>
 			</footer>
 		</div>
 	</div>
@@ -33,6 +36,7 @@
 <script>
 import ChatRoom from './components/ChatRoom.vue'
 import { sendSocket, loggedIn } from './utilities/SocketConnect.js'
+import { setCurrentUser, getCurrentUser, removeUser } from './utilities/StoreUser'
 
 export default {
 	/* 
@@ -55,7 +59,7 @@ export default {
 	components: { ChatRoom },
 	data: function () {
 		return {
-			username: '',
+			username: getCurrentUser(),
 			messages: [],
 			users: [],
 			modalIsActive: false,
@@ -69,23 +73,40 @@ export default {
 			this.messages = [...messages]
 			this.users = [...users]
 		},
+		getUsername: function () {
+			const currentUser = getCurrentUser()
+			if (currentUser !== this.username) {
+				this.username = currentUser
+			}
+		},
+		signOut: function () {
+			removeUser()
+			this.username = ''
+			this.messages = []
+		},
+		setUsername: function () {
+			setCurrentUser(this.username)
+			this.closeModal()
+		},
+		// modal
+		closeModal: function () {
+			this.modalIsActive = false
+		}
 	},
 	mounted: function () {
 		loggedIn(this.username, (messages, users) => {
 			this.updateDataWS(messages, users)
 		})
+		if(!this.username){
+			this.modalIsActive=true
+		}
 	},
 }
 </script>
-
 <style>
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
 }
-
 </style>
