@@ -38,3 +38,7 @@ export const establishWS = (username) => {
 export const sendSocket = (message) => {
   socket.emit('msg', message)
 }
+
+export const leaveParty = () =>{
+  socket.disconnect()
+}

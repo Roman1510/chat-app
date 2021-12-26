@@ -6,7 +6,12 @@
 		<div class="field">
 			<label class="label">Online:{{ users.length }}</label>
 		</div>
-		<button class="button is-primary" @click.prevent="signOut">Log out</button>
+		<button
+			class="button is-primary"
+			@click.prevent="username? signOut():openModal()"
+		>
+			{{ username ? 'Log out' : 'Log in' }}
+		</button>
 	</form>
 	<ChatRoom :messages="messages" @sendMessage="sendMessage" />
 	<div class="modal" :class="{ 'is-active': modalIsActive }">
@@ -14,7 +19,11 @@
 		<div class="modal-card">
 			<header class="modal-card-head">
 				<p class="modal-card-title">Please fill in the name:</p>
-				<button class="delete" @click.prevent="closeModal" aria-label="close"></button>
+				<button
+					class="delete"
+					@click.prevent="closeModal"
+					aria-label="close"
+				></button>
 			</header>
 			<section class="modal-card-body">
 				<div class="columns is-centered">
@@ -35,13 +44,19 @@
 
 <script>
 import ChatRoom from './components/ChatRoom.vue'
-import { sendSocket, loggedIn } from './utilities/SocketConnect.js'
-import { setCurrentUser, getCurrentUser, removeUser } from './utilities/StoreUser'
+import { sendSocket, loggedIn, leaveParty } from './utilities/SocketConnect.js'
+import {
+	setCurrentUser,
+	getCurrentUser,
+	removeUser,
+} from './utilities/StoreUser'
 
 export default {
 	/* 
   1. show the list of users
   2. make new styling
+
+  maybe in the future:
   2.1 make styling for modal prompt + localstorage to store the user's info (at least the name, that the particular name is online)
   3. show in the chat when someone joins
   4. show in the chat when someone leaves
@@ -66,6 +81,11 @@ export default {
 		}
 	},
 	methods: {
+		initialize: function () {
+			loggedIn(this.username, (messages, users) => {
+			this.updateDataWS(messages, users)
+		})
+		},
 		sendMessage: function (message) {
 			sendSocket(message)
 		},
@@ -80,7 +100,9 @@ export default {
 			}
 		},
 		signOut: function () {
+			console.log('sign out was called')
 			removeUser()
+			leaveParty()
 			this.username = ''
 			this.messages = []
 		},
@@ -91,16 +113,19 @@ export default {
 		// modal
 		closeModal: function () {
 			this.modalIsActive = false
-		}
+		},
+		openModal: function () {
+			console.log('openmodal is called')
+			this.modalIsActive = true
+		},
 	},
 	mounted: function () {
-		loggedIn(this.username, (messages, users) => {
-			this.updateDataWS(messages, users)
-		})
-		if(!this.username){
-			this.modalIsActive=true
+		if (!this.username) {
+			this.modalIsActive = true
+		} else {
+			this.initialize()
 		}
-	},
+	}
 }
 </script>
 <style>
