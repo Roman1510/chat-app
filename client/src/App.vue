@@ -1,14 +1,16 @@
 <template>
 	<form class="box">
 		<div class="field">
-			<label class="label">Username: {{ username }}</label>
+			<label class="label"
+				>Username: {{ username && !modalIsActive ? username : '' }}</label
+			>
 		</div>
 		<div class="field">
 			<label class="label">Online:{{ users.length }}</label>
 		</div>
 		<button
 			class="button is-primary"
-			@click.prevent="username? signOut():openModal()"
+			@click.prevent="username ? signOut() : openModal()"
 		>
 			{{ username ? 'Log out' : 'Log in' }}
 		</button>
@@ -28,7 +30,7 @@
 			<section class="modal-card-body">
 				<div class="columns is-centered">
 					<div class="column is-half">
-						<input class="input" type="text" v-model="username" />
+						<input class="input is-primary" type="text" v-model="username" />
 					</div>
 				</div>
 			</section>
@@ -44,7 +46,12 @@
 
 <script>
 import ChatRoom from './components/ChatRoom.vue'
-import { sendSocket, loggedIn, leaveParty } from './utilities/SocketConnect.js'
+import {
+	sendSocket,
+	loggedIn,
+	leaveParty,
+	establishWS,
+} from './utilities/SocketConnect.js'
 import {
 	setCurrentUser,
 	getCurrentUser,
@@ -70,6 +77,7 @@ export default {
     2)put socket operations in a separate file
     3)update the variables from the external file reactively
   */
+
 	name: 'app',
 	components: { ChatRoom },
 	data: function () {
@@ -82,9 +90,14 @@ export default {
 	},
 	methods: {
 		initialize: function () {
-			loggedIn(this.username, (messages, users) => {
-			this.updateDataWS(messages, users)
-		})
+			console.log('initialize was called', this.username)
+			
+			if (this.username) {
+				establishWS()
+				loggedIn(this.username, (messages, users) => {
+					this.updateDataWS(messages, users)
+				})
+			}
 		},
 		sendMessage: function (message) {
 			sendSocket(message)
@@ -100,7 +113,6 @@ export default {
 			}
 		},
 		signOut: function () {
-			console.log('sign out was called')
 			removeUser()
 			leaveParty()
 			this.username = ''
@@ -109,13 +121,13 @@ export default {
 		setUsername: function () {
 			setCurrentUser(this.username)
 			this.closeModal()
+			this.initialize()
 		},
 		// modal
 		closeModal: function () {
 			this.modalIsActive = false
 		},
 		openModal: function () {
-			console.log('openmodal is called')
 			this.modalIsActive = true
 		},
 	},
@@ -125,7 +137,7 @@ export default {
 		} else {
 			this.initialize()
 		}
-	}
+	},
 }
 </script>
 <style>

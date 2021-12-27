@@ -3,6 +3,7 @@ let messages = []
 let users = []
 const socket = io(process.env.VUE_APP_WS_URL)
 export const loggedIn = (username, cb) => {
+  console.log('loggedin')
   socket.on('loggedIn', (data) => {
     messages = data.messages
     users = data.users
@@ -31,8 +32,8 @@ export const listen = (username, cb) => {
   })
 }
 
-export const establishWS = (username) => {
-  loggedIn(username)
+export const establishWS = () => {
+  socket.connect()
 }
 
 export const sendSocket = (message) => {
