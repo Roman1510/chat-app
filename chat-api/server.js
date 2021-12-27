@@ -10,6 +10,7 @@ let users = []
 let messages = []
 let index = 0
 io.on('connection', (socket) => {
+  //here I should implement the logic to reconnect
   socket.emit('loggedIn', {
     users: users.map((s) => s.username),
     messages: messages,

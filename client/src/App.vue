@@ -91,13 +91,15 @@ export default {
 	methods: {
 		initialize: function () {
 			console.log('initialize was called', this.username)
-			
+
 			if (this.username) {
-				establishWS()
 				loggedIn(this.username, (messages, users) => {
 					this.updateDataWS(messages, users)
 				})
 			}
+			setTimeout(()=>{
+				establishWS()
+			},1000)
 		},
 		sendMessage: function (message) {
 			sendSocket(message)
@@ -119,9 +121,11 @@ export default {
 			this.messages = []
 		},
 		setUsername: function () {
+			if (this.username) {
+				this.initialize()
+			}
 			setCurrentUser(this.username)
 			this.closeModal()
-			this.initialize()
 		},
 		// modal
 		closeModal: function () {
