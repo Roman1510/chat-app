@@ -10,7 +10,6 @@ let users = []
 let messages = []
 let index = 0
 io.on('connection', (socket) => {
-  //here I should implement the logic to reconnect
   socket.emit('loggedIn', {
     users: users.map((s) => s.username),
     messages: messages,
@@ -18,7 +17,7 @@ io.on('connection', (socket) => {
 
   socket.on('newuser', (username) => {
     socket.username = username
-    users.push(socket)
+    users.push(socket.username)
     console.log(socket.username, ' now online')
     io.emit('userOnline', socket.username)
   })
@@ -39,7 +38,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log(`${socket.username} has left the party`)
     io.emit('userLeft', socket.username)
-    users.splice(users.indexOf(socket), 1)
+    users.splice(users.indexOf(socket.username), 1)
   })
 })
 

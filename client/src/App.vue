@@ -90,7 +90,7 @@ export default {
 	},
 	methods: {
 		initialize: function () {
-			console.log('initialize was called', this.username)
+			console.log('initialize was called', this.username,this.users)
 
 			if (this.username) {
 				loggedIn(this.username, (messages, users) => {
@@ -115,10 +115,11 @@ export default {
 			}
 		},
 		signOut: function () {
-			removeUser()
-			leaveParty()
 			this.username = ''
 			this.messages = []
+			this.users=[]
+			removeUser()
+			leaveParty()
 		},
 		setUsername: function () {
 			if (this.username) {

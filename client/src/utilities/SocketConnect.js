@@ -3,16 +3,14 @@ let messages = []
 let users = []
 const socket = io(process.env.VUE_APP_WS_URL)
 window.socket = socket
+
 export const loggedIn = (username, cb) => {
-  //newUser event
 	socket.on('loggedIn', (data) => {
-		messages = data.messages
-		users = data.users
+		messages = [...data.messages]
+		users = [...data.users]
 		socket.emit('newuser', username)
 	})
 	listen(username, cb)
-	// here I just pass the function, so that through the event listener,
-	// the messages list can be updated
 }
 
 export const listen = (username, cb) => {
@@ -21,13 +19,12 @@ export const listen = (username, cb) => {
 		cb && cb(messages, users)
 	})
 
-	socket.on('userLeft', (user) => {
-		users.splice(users.indexOf(user), 1)
+	socket.on('userLeft', (username) => {
+		users.splice(users.indexOf(username), 1)
 		cb && cb(messages, users)
 	})
 
 	socket.on('msg', (message) => {
-		console.log(users)
 		messages.push(message)
 		cb && cb(messages, users)
 	})
