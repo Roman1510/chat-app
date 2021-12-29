@@ -6,39 +6,17 @@ const io = require('socket.io')(http, {
     origin: '*'
   },
 })
-let users = []
-let messages = []
-let index = 0
+
 io.on('connection', (socket) => {
-  socket.emit('loggedIn', {
-    users: users.map((s) => s.username),
-    messages: messages,
-  })
+  //message to a current client
+  socket.emit('message','WELCOME!')
 
-  socket.on('newuser', (username) => {
-    socket.username = username
-    users.push(socket.username)
-    console.log(socket.username, ' now online')
-    io.emit('userOnline', socket.username)
-  })
+  //message to all the clients except the current
+  socket.broadcast.emit('message','A user joined a chat')
 
-  socket.on('msg', (msg) => {
-    let message = {
-      index: index,
-      username: socket.username,
-      msg: msg,
-    }
-    messages.push(message)
-    console.log('the message was sent: ',message)
-    io.emit('msg', message)
-    index++
-  })
-
-  //disconnect
-  socket.on('disconnect', () => {
-    console.log(`${socket.username} has left the party`)
-    io.emit('userLeft', socket.username)
-    users.splice(users.indexOf(socket.username), 1)
+  //message to all the clients (just in case)
+  socket.on('disconnect',()=>{
+    io.emit('message','A user has left the chat')
   })
 })
 

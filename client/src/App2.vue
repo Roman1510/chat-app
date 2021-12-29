@@ -8,56 +8,35 @@
 			<div class="column is-half">
 				<div class="box is-0">{{ username }}</div>
 				<input type="text" placeholder="enter username" v-model="username" />
-				<button class="button is-primary mx-2" @click.prevent="logIn">
-					Log in
-				</button>
-				<button class="button is-primary mx-2" @click.prevent="logOut">
-					Log out
-				</button>
 			</div>
 		</div>
 		<div class="columns">
 			<div class="column is-half">
-				<div class="box"></div>
-				<div class="box"></div>
-				<div class="box"></div>
+				<div
+					class="box"
+					v-for="(message, index) in messages"
+					:key="index"
+				>{{message}}</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import { ref } from 'vue'
-import ChatRoom from './components/ChatRoom.vue'
-import { leaveParty, loggedIn, sendSocket } from './utilities/SocketConnect'
-
+import { io } from 'socket.io-client'
 export default {
 	name: 'apptest',
 	setup() {
+		const socket = io('http://localhost:3000')
+		socket.on('message',(message)=>{
+			console.log(message)
+		})
 		const messages = ref([])
+		messages.value = ['asdf','asdgga','ashfah']
 		const username = ref('')
-		const users = ref([])
-		const sendMessage = (message) => {
-			sendSocket(message)
-		}
-		const updateData = (messages, users) => {
-            messages.value = [...messages]
-            users.value = [...users]
-        }
-		const logIn = () => {
-			loggedIn(username.value, (messages, users) => updateData(messages,users))
-		}
-		const logOut = () => {
-			leaveParty()
-		}
 		return {
-			username,
-			users,
-			//
 			messages,
-			sendMessage,
-			ChatRoom,
-			logIn,
-			logOut,
+			username,
 		}
 	},
 }
