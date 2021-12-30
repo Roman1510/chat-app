@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 	<div>
 		<div class="columns my-5 mx-5">
 			<div class="column is-half">
