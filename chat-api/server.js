@@ -10,10 +10,8 @@ const io = require('socket.io')(http, {
 io.on('connection', (socket) => {
   //message to a current client
   socket.emit('message','WELCOME!')
-
   //message to all the clients except the current
   socket.broadcast.emit('message','A user joined a chat')
-
   //message to all the clients (just in case)
   socket.on('disconnect',()=>{
     io.emit('message','A user has left the chat')
