@@ -2,64 +2,30 @@
   <div class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </p>
-      </header>
+      <header class="modal-card-head"></header>
       <section class="modal-card-body">
         <div class="tile is-ancestor">
           <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
-              <p class="title">List of friends</p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                ornare magna eros, eu pellentesque tortor vestibulum ut.
-                Maecenas non massa sem. Etiam finibus odio quis feugiat
-                facilisis.
-              </p>
-            </div>
-            <div class="tile is-child box">
-              <p class="title">Quick menu</p>
-              <p>Lorem ipsvestibinibus odio quis feugiat facilisis.</p>
+              <p class="subtitle">Participants</p>
+              <div>
+                <p>* FIRST</p>
+                <p>* SECOND</p>
+              </div>
             </div>
           </div>
           <div class="tile is-parent">
             <div class="tile is-child box">
-              <p class="title">The chat itself</p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                semper diam at erat pulvinar, at pulvinar felis blandit.
-                Vestibulum volutpat tellus diam, consequat gravida libero
-                rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc
-                dui porta orci, quis semper odio felis ut quam.
-              </p>
-              <p>
-                Suspendisse varius ligula in molestie lacinia. Maecenas varius
-                eget ligula a sagittis. Pellentesque interdum, nisl nec interdum
-                maximus, augue diam porttitor lorem, et sollicitudin felis neque
-                sit amet erat. Maecenas imperdiet felis nisi, fringilla luctus
-                felis hendrerit sit amet. Aenean vitae gravida diam, finibus
-                dignissim turpis. Sed eget varius ligula, at volutpat tortor.
-              </p>
-              <p>
-                Integer sollicitudin, tortor a mattis commodo, velit urna
-                rhoncus erat, vitae congue lectus dolor consequat libero. Donec
-                leo ligula, maximus et pellentesque sed, gravida a metus. Cras
-                ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis
-                faucibus libero. Quisque non semper leo.
-              </p>
+              <div class="container">This is the chat</div>
             </div>
           </div>
+        </div>
+		
+        <div class="box">
+          <span class="icon-text">
+            <span class="icon" :src="mdiSend">
+            </span>
+          </span>
         </div>
       </section>
       <footer class="modal-card-foot"></footer>
@@ -67,8 +33,16 @@
   </div>
 </template>
 <script>
+import { mdiSend } from '@mdi/js'
 export default {
   name: 'ChatRoom',
+  setup() {
+    return { mdiSend }
+  },
 }
 </script>
-<style></style>
+<style>
+.tile .is-child .container {
+  min-height: 350px;
+}
+</style>
