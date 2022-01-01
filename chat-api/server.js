@@ -9,15 +9,16 @@ const io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
   //message to a current client
-  socket.emit('message','WELCOME!')
+  socket.emit('loggedIn','WELCOME!')
   //message to all the clients except the current
-  socket.broadcast.emit('message','A user joined a chat')
+  socket.broadcast.emit('loggedIn','A user joined a chat')
   //message to all the clients (just in case)
   socket.on('disconnect',()=>{
     io.emit('message','A user has left the chat')
   })
 
-  socket.on('chatMessage',msg=>{
+  socket.on('chatMessage',(msg)=>{
+    console.log(msg,'this is the message')
     io.emit('message',msg)
   })
 })
