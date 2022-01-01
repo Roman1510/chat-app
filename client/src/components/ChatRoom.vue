@@ -21,11 +21,9 @@
           </div>
         </div>
 		
-        <div class="box">
-          <span class="icon-text">
-            <span class="icon" :src="mdiSend">
-            </span>
-          </span>
+        <div class="box columns">
+          <input class="input column is-four-fifths" placeholder="Start typing..." type="text">
+          <button class="button is-primary mx-2">Send</button>
         </div>
       </section>
       <footer class="modal-card-foot"></footer>
