@@ -7,7 +7,7 @@
         <div class="tile is-ancestor">
           <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
-              <p class="subtitle">Participants</p>
+              <p class="subtitle">In this chat: {{3}}</p>
               <div></div>
             </div>
           </div>
@@ -40,24 +40,30 @@
   </div>
 </template>
 <script>
-import { sendSocket, getMessages } from '../utilities/SocketConnect'
+import { sendChatMessage, getMessages, authWS } from '../utilities/SocketConnect'
 import { ref } from 'vue'
 export default {
   name: 'ChatRoom',
   setup() {
     const message = ref('')
     const messagesArray = ref([])
+    const currentUser = ref('roma')
+    const logIn = () => {
+      authWS(currentUser.value)
+    }
+    logIn()
     const updateMessagesArray = (msg) => {
       if (msg) {
         messagesArray.value.push(msg)
       }
     }
     const sendMessage = () => {
-      sendSocket(message.value)
+      sendChatMessage(message.value,currentUser.value)
       message.value = ''
     }
     getMessages(updateMessagesArray)
     return {
+      logIn,
       message,
       sendMessage,
       messagesArray,
