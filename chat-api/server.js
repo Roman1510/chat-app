@@ -10,12 +10,6 @@ const io = require('socket.io')(http, {
 const messages = []
 const users = []
 
-/*
-  1. append new user on new login
-  2. remove user on every disconnect
-
-*/
-
 io.on('connection', (socket) => {
   socket.on('newUser', (user) => {
     users.push(user)

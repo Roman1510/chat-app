@@ -40,6 +40,17 @@
   </div>
 </template>
 <script>
+/*
+  1. add new page for logging in
+  2. local storing the user
+  3. logging in functionality with local user
+  4. logging out functionality
+  5. add different 'rooms' functionality
+  6. add styling to messages (side of the username included)
+  7. add icon styling to the username (circle with initials)
+  8. deploy
+  the rest is TBC
+*/
 import { sendChatMessage, getMessages, authWS } from '../utilities/SocketConnect'
 import { ref,onMounted } from 'vue'
 export default {
