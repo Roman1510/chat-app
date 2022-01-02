@@ -14,7 +14,9 @@
           <div class="tile is-parent">
             <div class="tile is-child box">
               <div class="container">
-                <p v-for="(item, index) in messagesArray" :key="index">{{item}}</p>
+                <p v-for="(item, index) in messagesArray" :key="index">
+                  {{ item }}
+                </p>
               </div>
             </div>
           </div>
@@ -23,6 +25,7 @@
         <div class="box columns">
           <input
             v-model="message"
+            @keypress.enter="sendMessage"
             class="input column is-four-fifths"
             placeholder="Start typing..."
             type="text"
@@ -45,19 +48,20 @@ export default {
     const message = ref('')
     const messagesArray = ref([])
     const updateMessagesArray = (msg) => {
-      if(msg){
+      if (msg) {
         messagesArray.value.push(msg)
       }
     }
     const sendMessage = () => {
       sendSocket(message.value)
+      message.value = ''
     }
     getMessages(updateMessagesArray)
     return {
       message,
       sendMessage,
       messagesArray,
-      updateMessagesArray
+      updateMessagesArray,
     }
   },
 }
