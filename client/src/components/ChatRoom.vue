@@ -41,7 +41,7 @@
 </template>
 <script>
 import { sendChatMessage, getMessages, authWS } from '../utilities/SocketConnect'
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 export default {
   name: 'ChatRoom',
   setup() {
@@ -51,7 +51,9 @@ export default {
     const logIn = () => {
       authWS(currentUser.value)
     }
-    logIn()
+    onMounted(() => {
+      logIn()
+    })
     const updateMessagesArray = (msg) => {
       if (msg) {
         messagesArray.value.push(msg)

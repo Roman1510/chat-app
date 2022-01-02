@@ -4,7 +4,7 @@ const socket = io(process.env.VUE_APP_WS_URL)
 window.socket = socket
 
 export function authWS(username) {
-	socket.emit('loggedIn',username)
+	socket.emit('newUser',username)
 }
 
 export function sendChatMessage(msg,user) {

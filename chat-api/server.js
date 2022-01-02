@@ -13,9 +13,9 @@ const users = []
 io.on('connection', (socket) => {
   socket.on('newUser', (user) => {
     //message to a current client
-    socket.emit('loggedIn', `WELCOME ${user}!`)
+    socket.emit('loggedIn', {msg:`WELCOME ${user}!`})
     //message to all the clients except the current
-    socket.broadcast.emit('loggedIn', `${user} joined the chat.`)
+    socket.broadcast.emit('loggedIn', {msg:`${user} joined the chat.`})
     //message to all the clients (just in case)
   })
 
