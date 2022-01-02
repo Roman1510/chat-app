@@ -20,16 +20,15 @@ io.on('connection', (socket) => {
   socket.on('newUser', (user) => {
     users.push(user)
     socket.username = user
-    //message to a current client
+    //message to a current client =>
     socket.emit('loggedIn', { msg: `WELCOME ${user}!` })
-    //message to all the clients except the current
+    //notification to everyone except the current =>
     socket.broadcast.emit('loggedIn', { msg: `${user} joined the chat.` })
-    //message to all the clients (just in case)
   })
 
   socket.on('disconnect', () => {
     console.log(`${socket.username} left`)
-    var toDelete = users.indexOf(socket.user)
+    var toDelete = users.indexOf(socket.username)
     if (toDelete !== -1) {
       users.splice(toDelete, 1)
     }
@@ -37,6 +36,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('chatMessage', (msg) => {
+    console.log(users)
     console.log(`${msg.msg} was sent from the user ${msg.user}`)
     messages.push(msg)
     io.emit('message', msg)

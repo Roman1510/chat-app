@@ -15,7 +15,7 @@
             <div class="tile is-child box">
               <div class="container">
                 <p v-for="(item, index) in messagesArray" :key="index">
-                  {{ item }}
+                  {{ item.msg }}
                 </p>
               </div>
             </div>
