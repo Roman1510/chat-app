@@ -18,6 +18,7 @@ io.on('connection', (socket) => {
     socket.emit('loggedIn', { msg: `WELCOME ${user}!` })
     //notification to everyone except the current =>
     socket.broadcast.emit('loggedIn', { msg: `${user} joined the chat.` })
+    io.emit('userList',users)
   })
 
   socket.on('disconnect', () => {
@@ -26,7 +27,8 @@ io.on('connection', (socket) => {
     if (toDelete !== -1) {
       users.splice(toDelete, 1)
     }
-    io.emit('message', { msg: `A user ${socket.username} has left the chat` })
+    io.emit('message', { msg: `User ${socket.username} has left the chat` })
+    io.emit('userList',users)
   })
 
   socket.on('chatMessage', (msg) => {

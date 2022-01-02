@@ -7,7 +7,7 @@
         <div class="tile is-ancestor">
           <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
-              <p class="subtitle">In this chat: {{3}}</p>
+              <p class="subtitle">In this chat: {{userList.length}}</p>
               <div></div>
             </div>
           </div>
@@ -51,7 +51,7 @@
   8. deploy
   the rest is TBC
 */
-import { sendChatMessage, getMessages, authWS } from '../utilities/SocketConnect'
+import { sendChatMessage, getMessages, authWS, getUsers } from '../utilities/SocketConnect'
 import { ref,onMounted } from 'vue'
 export default {
   name: 'ChatRoom',
@@ -59,28 +59,34 @@ export default {
     const message = ref('')
     const messagesArray = ref([])
     const currentUser = ref('roma')
+    const userList = ref([])
     const logIn = () => {
       authWS(currentUser.value)
     }
     onMounted(() => {
       logIn()
     })
-    const updateMessagesArray = (msg) => {
+    const updateMessages = (msg) => {
       if (msg) {
         messagesArray.value.push(msg)
       }
     }
+    const updateUsersArray = (newUserList) => {
+      userList.value = [...newUserList]
+    }
+    getUsers(updateUsersArray)
     const sendMessage = () => {
       sendChatMessage(message.value,currentUser.value)
       message.value = ''
     }
-    getMessages(updateMessagesArray)
+    getMessages(updateMessages)
     return {
       logIn,
       message,
       sendMessage,
       messagesArray,
-      updateMessagesArray,
+      updateMessages,
+      userList
     }
   },
 }
