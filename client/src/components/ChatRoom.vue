@@ -41,8 +41,7 @@
 </template>
 <script>
 /*
-  1. add new page for logging in
-  2. local storing the user
+  2. local storing the user and a room
   3. logging in functionality with local user
   4. logging out functionality
   5. add different 'rooms' functionality
