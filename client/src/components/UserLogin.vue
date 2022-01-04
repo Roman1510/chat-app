@@ -15,7 +15,7 @@
         </div>
         <div class="column is-half">
           <div class="columns is-centered">
-            <form @submit.enter.prevent="registerUsername">
+            <form @submit.enter.prevent="submitForm">
               <div class="column is-three-quarters">
               <input v-model="username" class="input is-medium is-rounded" placeholder="Username, e.g. Trailblazer999" type="text" />
               <div class="select is-primary is-medium is-rounded my-5">
@@ -36,19 +36,32 @@
 </template>
 <script>
 import { ref } from "vue"
+import { getCurrentUser, setCurrentUser } from "../utilities/UserData"
+import { useRouter, useRoute } from 'vue-router';
 export default {
   name: 'UserLogin',
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const redirectPath = route.query.redirect || '/chat';
     const username = ref('')
     const room = ref('0')
-    const registerUsername = () => {
-      //here localstorage is needed to be implemented
-      // alert(`${username.value} and ${room.value}`)
+    const submitForm = () => {
+      const localUser = getCurrentUser()
+      if(!localUser.user&&!localUser.room){
+        setCurrentUser({
+          user:username.value,
+          room:room.value
+        })
+      }
+
+      router.push(redirectPath)
+
     }
     return {
       username,
       room,
-      registerUsername
+      submitForm
     }
   }
 }
