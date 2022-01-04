@@ -11,22 +11,29 @@
     <div class="hero-body">
       <div class="columns">
         <div class="column is-half">
-          <p class="title">Please enter your username and choose a room here 👉🏽</p>
+          <p class="title">
+            Please enter your username and choose a room here 👉🏽
+          </p>
         </div>
         <div class="column is-half">
           <div class="columns is-centered">
             <form @submit.enter.prevent="submitForm">
               <div class="column is-three-quarters">
-              <input v-model="username" class="input is-medium is-rounded" placeholder="Username, e.g. Trailblazer999" type="text" />
-              <div class="select is-primary is-medium is-rounded my-5">
-                <select v-model="room">
-                  <option value="0">JavaScript (default)</option>
-                  <option value="1">Swift</option>
-                  <option value="2">Python</option>
-                  <option value="3">Java</option>
-                </select>
+                <input
+                  v-model="username"
+                  class="input is-medium is-rounded"
+                  placeholder="Username, e.g. Trailblazer999"
+                  type="text"
+                />
+                <div class="select is-primary is-medium is-rounded my-5">
+                  <select v-model="room">
+                    <option value="0">JavaScript (default)</option>
+                    <option value="1">Swift</option>
+                    <option value="2">Python</option>
+                    <option value="3">Java</option>
+                  </select>
+                </div>
               </div>
-            </div>
             </form>
           </div>
         </div>
@@ -35,35 +42,31 @@
   </section>
 </template>
 <script>
-import { ref } from "vue"
-import { getCurrentUser, setCurrentUser } from "../utilities/UserData"
-import { useRouter, useRoute } from 'vue-router';
+import { ref } from 'vue'
+import { setCurrentUser } from '../utilities/UserData'
+import { useRouter /*useRoute*/ } from 'vue-router'
 export default {
   name: 'UserLogin',
   setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const redirectPath = route.query.redirect || '/chat';
+    // const route = useRoute();
+    const router = useRouter()
+    // const redirectPath = route.query.redirect || '/chat';
     const username = ref('')
     const room = ref('0')
     const submitForm = () => {
-      const localUser = getCurrentUser()
-      if(!localUser.user&&!localUser.room){
-        setCurrentUser({
-          user:username.value,
-          room:room.value
-        })
-      }
+      setCurrentUser({
+        user: username.value,
+        room: room.value,
+      })
 
-      router.push(redirectPath)
-
+      router.push('chat')
     }
     return {
       username,
       room,
-      submitForm
+      submitForm,
     }
-  }
+  },
 }
 </script>
 <style lang=""></style>

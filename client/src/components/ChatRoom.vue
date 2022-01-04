@@ -50,20 +50,27 @@
   8. deploy
   the rest is TBC
 */
-import { sendChatMessage, getMessages, authWS, getUsers } from '../utilities/SocketConnect'
-import { ref,onMounted } from 'vue'
+import { sendChatMessage, getMessages, authWS, getUsers, closeConnection } from '../utilities/SocketConnect'
+import { ref,onBeforeMount, onUnmounted } from 'vue'
+import { getCurrentUser } from '../utilities/UserData'
 export default {
   name: 'ChatRoom',
   setup() {
     const message = ref('')
     const messagesArray = ref([])
-    const currentUser = ref('roma')
+    const currentUser = ref('')
+    // const currentRoom = ref('')
     const userList = ref([])
     const logIn = () => {
       authWS(currentUser.value)
     }
-    onMounted(() => {
+    onBeforeMount(() => {
+      currentUser.value = getCurrentUser().user
+      console.log(`oncreated was triggered ${currentUser.value}`)
       logIn()
+    })
+    onUnmounted(()=>{
+      closeConnection()
     })
     const updateMessages = (msg) => {
       if (msg) {

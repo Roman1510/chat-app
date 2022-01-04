@@ -4,6 +4,7 @@ const socket = io(process.env.VUE_APP_WS_URL)
 window.socket = socket
 
 export function authWS(username) {
+  socket.open()
   socket.emit('newUser', username)
 }
 
@@ -25,4 +26,8 @@ export function getUsers(updateUsersArray) {
     console.log(userList)
 	updateUsersArray(userList)
   })
+}
+
+export function closeConnection() {
+  socket.close()
 }
