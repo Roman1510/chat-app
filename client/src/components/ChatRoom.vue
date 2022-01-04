@@ -1,9 +1,5 @@
 <template>
-  <div class="modal is-active">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head"></header>
-      <section class="modal-card-body">
+    
         <div class="tile is-ancestor">
           <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
@@ -34,10 +30,6 @@
             Send
           </button>
         </div>
-      </section>
-      <footer class="modal-card-foot"></footer>
-    </div>
-  </div>
 </template>
 <script>
 /*
