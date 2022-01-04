@@ -11,15 +11,21 @@
     <div class="hero-body">
       <div class="columns">
         <div class="column is-half">
-          <p class="title">Please enter your username and choose a room:</p>
+          <p class="title">Please enter your username and choose a room here 👉🏽</p>
         </div>
-        <div class="column is-half is-narrow">
-          <input class="input is-medium" type="text" />
-          <div class="select is-primary is-medium my-5">
-            <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
-            </select>
+        <div class="column is-half">
+          <div class="columns is-centered">
+            <div class="column is-three-quarters">
+              <input class="input is-medium is-rounded" placeholder="Username, e.g. Trailblazer999" type="text" />
+              <div class="select is-primary is-medium is-rounded my-5">
+                <select>
+                  <option value="0">JavaScript (default)</option>
+                  <option value="1">Swift</option>
+                  <option value="2">Python</option>
+                  <option value="3">Java</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
