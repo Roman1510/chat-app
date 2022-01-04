@@ -4,8 +4,10 @@ const socket = io(process.env.VUE_APP_WS_URL)
 window.socket = socket
 
 export function authWS(username) {
-  socket.open()
-  socket.emit('newUser', username)
+  if (username) {
+    socket.open()
+    socket.emit('newUser', username)
+  }
 }
 
 export function sendChatMessage(msg, user) {
@@ -24,7 +26,7 @@ export function getMessages(updateMessages) {
 export function getUsers(updateUsersArray) {
   socket.on('userList', (userList) => {
     console.log(userList)
-	updateUsersArray(userList)
+    updateUsersArray(userList)
   })
 }
 

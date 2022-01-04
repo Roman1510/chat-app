@@ -1,35 +1,42 @@
 <template>
-    
-        <div class="tile is-ancestor">
-          <div class="tile is-4 is-vertical is-parent">
-            <div class="tile is-child box">
-              <p class="subtitle">In this chat: {{userList.length}}</p>
-              <div></div>
+  <section class="hero is-info is-large">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <div class="navbar-item">
+              <h1 class="title">Developer's lair</h1>
             </div>
           </div>
-          <div class="tile is-parent">
-            <div class="tile is-child box">
-              <div class="container">
-                <p v-for="(item, index) in messagesArray" :key="index">
-                  {{ item.msg }}
-                </p>
-              </div>
+          <div class="navbar-menu">
+            <div class="navbar-end">
+              <a class="navbar-item is-active"> Home </a>
+              <a class="navbar-item"> Documentation </a>
+              <span class="navbar-item">
+                <a class="button is-info is-inverted">
+                  <span class="icon">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  <span>Log out</span>
+                </a>
+              </span>
             </div>
           </div>
         </div>
+      </nav>
+    </div>
 
-        <div class="box columns">
-          <input
-            v-model="message"
-            @keypress.enter="sendMessage"
-            class="input column is-four-fifths"
-            placeholder="Start typing..."
-            type="text"
-          />
-          <button @click.prevent="sendMessage" class="button is-primary mx-2">
-            Send
-          </button>
-        </div>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <p class="title">Chat</p>
+        <p class="subtitle">is here!!!</p>
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      
+    </div>
+  </section>
 </template>
 <script>
 /*
@@ -42,9 +49,16 @@
   8. deploy
   the rest is TBC
 */
-import { sendChatMessage, getMessages, authWS, getUsers, closeConnection } from '../utilities/SocketConnect'
-import { ref,onBeforeMount, onUnmounted } from 'vue'
+import {
+  sendChatMessage,
+  getMessages,
+  authWS,
+  getUsers,
+  closeConnection,
+} from '../utilities/SocketConnect'
+import { ref, onBeforeMount, onUnmounted } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 export default {
   name: 'ChatRoom',
   setup() {
@@ -61,7 +75,7 @@ export default {
       console.log(`oncreated was triggered ${currentUser.value}`)
       logIn()
     })
-    onUnmounted(()=>{
+    onUnmounted(() => {
       closeConnection()
     })
     const updateMessages = (msg) => {
@@ -74,7 +88,7 @@ export default {
     }
     getUsers(updateUsersArray)
     const sendMessage = () => {
-      sendChatMessage(message.value,currentUser.value)
+      sendChatMessage(message.value, currentUser.value)
       message.value = ''
     }
     getMessages(updateMessages)
@@ -84,7 +98,7 @@ export default {
       sendMessage,
       messagesArray,
       updateMessages,
-      userList
+      userList,
     }
   },
 }
