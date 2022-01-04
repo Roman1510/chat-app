@@ -15,10 +15,11 @@
         </div>
         <div class="column is-half">
           <div class="columns is-centered">
-            <div class="column is-three-quarters">
-              <input class="input is-medium is-rounded" placeholder="Username, e.g. Trailblazer999" type="text" />
+            <form @submit.enter.prevent="registerUsername">
+              <div class="column is-three-quarters">
+              <input v-model="username" class="input is-medium is-rounded" placeholder="Username, e.g. Trailblazer999" type="text" />
               <div class="select is-primary is-medium is-rounded my-5">
-                <select>
+                <select v-model="room">
                   <option value="0">JavaScript (default)</option>
                   <option value="1">Swift</option>
                   <option value="2">Python</option>
@@ -26,6 +27,7 @@
                 </select>
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -33,8 +35,22 @@
   </section>
 </template>
 <script>
+import { ref } from "vue"
 export default {
   name: 'UserLogin',
+  setup() {
+    const username = ref('')
+    const room = ref('0')
+    const registerUsername = () => {
+      //here localstorage is needed to be implemented
+      // alert(`${username.value} and ${room.value}`)
+    }
+    return {
+      username,
+      room,
+      registerUsername
+    }
+  }
 }
 </script>
 <style lang=""></style>
