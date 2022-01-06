@@ -17,7 +17,7 @@
                   <span class="icon">
                     <i class="fas fa-sign-out-alt"></i>
                   </span>
-                  <span>Log out</span>
+                  <span @click.prevent="logOut">Log out</span>
                 </a>
               </span>
             </div>
@@ -40,8 +40,6 @@
 </template>
 <script>
 /*
-  2. local storing the user and a room
-  3. logging in functionality with local user
   4. logging out functionality
   5. add different 'rooms' functionality
   6. add styling to messages (side of the username included)
@@ -59,9 +57,11 @@ import {
 import { ref, onBeforeMount, onUnmounted } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useRouter } from 'vue-router'
 export default {
   name: 'ChatRoom',
   setup() {
+    const router = useRouter()
     const message = ref('')
     const messagesArray = ref([])
     const currentUser = ref('')
@@ -78,6 +78,10 @@ export default {
     onUnmounted(() => {
       closeConnection()
     })
+    const logOut = () => {
+      closeConnection()
+      router.push('/')
+    }
     const updateMessages = (msg) => {
       if (msg) {
         messagesArray.value.push(msg)
@@ -94,6 +98,7 @@ export default {
     getMessages(updateMessages)
     return {
       logIn,
+      logOut,
       message,
       sendMessage,
       messagesArray,

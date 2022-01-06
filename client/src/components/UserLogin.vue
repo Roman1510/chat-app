@@ -44,13 +44,11 @@
 <script>
 import { ref } from 'vue'
 import { setCurrentUser } from '../utilities/UserData'
-import { useRouter /*useRoute*/ } from 'vue-router'
+import { useRouter } from 'vue-router'
 export default {
   name: 'UserLogin',
   setup() {
-    // const route = useRoute();
     const router = useRouter()
-    // const redirectPath = route.query.redirect || '/chat';
     const username = ref('')
     const room = ref('0')
     const submitForm = () => {
