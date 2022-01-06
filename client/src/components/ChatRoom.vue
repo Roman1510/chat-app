@@ -13,11 +13,11 @@
               <a class="navbar-item is-active"> Home </a>
               <a class="navbar-item"> Documentation </a>
               <span class="navbar-item">
-                <a class="button is-info is-inverted">
+                <a @click.prevent="logOut" class="button is-info is-inverted">
                   <span class="icon">
                     <i class="fas fa-sign-out-alt"></i>
                   </span>
-                  <span @click.prevent="logOut">Log out</span>
+                  <span>Log out</span>
                 </a>
               </span>
             </div>
@@ -33,17 +33,15 @@
       </div>
     </div>
 
-    <div class="hero-foot">
-      
-    </div>
+    <div class="hero-foot"></div>
   </section>
 </template>
 <script>
 /*
-  5. add different 'rooms' functionality to backend to separete messages flows
-  6. add styling to messages (side of the username included)
-  7. add icon styling to the username (circle with initials)
-  8. deploy
+  1. add different 'rooms' functionality to backend to separete messages flows
+  2. add styling to messages (side of the username included)
+  3. add icon styling to the username (circle with initials)
+  4. deploy
   the rest is TBC
 */
 import {
