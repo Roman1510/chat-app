@@ -40,8 +40,7 @@
 </template>
 <script>
 /*
-  4. logging out functionality
-  5. add different 'rooms' functionality
+  5. add different 'rooms' functionality to backend to separete messages flows
   6. add styling to messages (side of the username included)
   7. add icon styling to the username (circle with initials)
   8. deploy
