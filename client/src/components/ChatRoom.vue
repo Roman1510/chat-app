@@ -27,14 +27,27 @@
     </div>
 
     <div class="hero-body">
-      <div class="container has-text-centered">
+      <div class="container has-text-centered chat">
         <p class="title">Chat</p>
         <p class="subtitle">is here!!!</p>
       </div>
     </div>
 
-    <div class="hero-foot"></div>
+    <div class="hero-foot">
+      <div class="columns is-centered my-5">
+        <div class="column is-three-quarters">
+          <textarea
+            class="textarea has-fixed-size"
+            placeholder="Start typing..."
+          ></textarea>
+        </div>
+        <div class="">
+          <button class="button is-primary">Send</button>
+        </div>
+      </div>
+    </div>
   </section>
+  
 </template>
 <script>
 /*
@@ -106,7 +119,12 @@ export default {
 }
 </script>
 <style>
-.tile .is-child .container {
-  min-height: 350px;
+html, body 
+{ 
+ height: 100%;
+ overflow: hidden
+}
+.chat {
+  min-height: 200px;
 }
 </style>

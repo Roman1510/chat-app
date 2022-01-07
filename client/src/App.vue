@@ -18,16 +18,10 @@
   text-align: center;
 }
 
-.fade-enter-from {
-
-}
 .fade-leave-to {
   opacity: 0;
 }
-.fade-enter-active {
-
-}
 .fade-leave-active {
-  transition: opacity 1s ease-out
+  transition: 0.2s opacity ease-in-out;
 }
 </style>
