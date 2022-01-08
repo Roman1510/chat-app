@@ -13,7 +13,7 @@ import {
   getUsers,
   closeConnection,
 } from '../utilities/SocketConnect'
-import { ref, onBeforeMount, onUnmounted } from 'vue'
+import { ref, onBeforeMount, onUnmounted, watch } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useRouter } from 'vue-router'
@@ -24,6 +24,7 @@ export default {
     const message = ref('')
     const messagesArray = ref([])
     const currentUser = ref('')
+    const isSendActive = ref(false)
     // const currentRoom = ref('')
     const userList = ref([])
     const logIn = () => {
@@ -55,7 +56,17 @@ export default {
       message.value = ''
     }
     getMessages(updateMessages)
+
+    watch(message,(newValue,oldValue)=>{
+      if(!message.value){
+        isSendActive.value=false
+      }
+      if(newValue!==oldValue&&message.value!=='') {
+        isSendActive.value=true
+      }
+    })
     return {
+      isSendActive,
       logIn,
       logOut,
       message,
@@ -139,7 +150,8 @@ export default {
           <div class="control">
             <button
               @click.prevent="sendMessage"
-              class="button is-large is-primary"
+              class="button is-large"
+              :class="{'is-primary':isSendActive}"
             >
               Send
             </button>
@@ -158,7 +170,7 @@ export default {
 
 .chat-message {
   position: relative;
-  background-color: #8281cf;
+  background-color: #916bbf;
   color: white;
   width: fit-content;
   border-radius: 10px;
@@ -173,6 +185,6 @@ export default {
 
 .is-me {
   margin-left: auto;
-  background-color: #aa237d;
+  background-color:hsl(171, 100%, 41%);
 }
 </style>
