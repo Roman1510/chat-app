@@ -96,12 +96,12 @@ export default {
       </nav>
     </div>
 
-    <div class="hero mx-5">
-      <div class="my-5">
-        <div class="box chat"></div>
+    <div class="hero-body">
+      <div class="chat box" style="height:100%;width:100%">
+
       </div>
     </div>
-    <div class="hero-foot ">
+    <div class="hero-foot">
     <footer class="section is-small">
       <div class="chatinput field has-addons ">
         <div class="control is-expanded">
@@ -129,6 +129,6 @@ body {
   overflow: hidden;
 }
 .chat {
-  min-height: 450px;
+  min-height: 40rem;
 }
 </style>
