@@ -1,54 +1,3 @@
-<template>
-  <section class="hero is-info is-large">
-    <div class="hero-head">
-      <nav class="navbar">
-        <div class="container">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <h1 class="title">Developer's lair</h1>
-            </div>
-          </div>
-          <div class="navbar-menu">
-            <div class="navbar-end">
-              <a class="navbar-item is-active"> Home </a>
-              <a class="navbar-item"> Documentation </a>
-              <span class="navbar-item">
-                <a @click.prevent="logOut" class="button is-info is-inverted">
-                  <span class="icon">
-                    <i class="fas fa-sign-out-alt"></i>
-                  </span>
-                  <span>Log out</span>
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-
-    <div class="hero-body">
-      <div class="container has-text-centered chat">
-        <p class="title">Chat</p>
-        <p class="subtitle">is here!!!</p>
-      </div>
-    </div>
-
-    <div class="hero-foot">
-      <div class="columns is-centered my-5">
-        <div class="column is-three-quarters">
-          <textarea
-            class="textarea has-fixed-size"
-            placeholder="Start typing..."
-          ></textarea>
-        </div>
-        <div class="">
-          <button class="button is-primary">Send</button>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-</template>
 <script>
 /*
   1. add different 'rooms' functionality to backend to separete messages flows
@@ -118,13 +67,61 @@ export default {
   },
 }
 </script>
+
+<template>
+  <section class="hero is-info is-large">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <div class="navbar-item">
+              <h1 class="title">Developer's lair</h1>
+            </div>
+          </div>
+          <div class="navbar-menu">
+            <div class="navbar-end">
+              <a class="navbar-item is-active"> Home </a>
+              <a class="navbar-item"> Documentation </a>
+              <span class="navbar-item">
+                <a @click.prevent="logOut" class="button is-info is-inverted">
+                  <span class="icon">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  <span>Log out</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="hero mx-5">
+      <div class="my-5">
+        <div class="box chat"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="field has-addons">
+        <div class="control">
+          <input class="input is-large" type="text" placeholder="Start typing..." />
+        </div>
+        <div class="control">
+          <a class="button is-primary is-large"> Send </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
 <style>
-html, body 
-{ 
- height: 100%;
- overflow: hidden
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
 .chat {
-  min-height: 200px;
+  min-height: 450px;
 }
 </style>
