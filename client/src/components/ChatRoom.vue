@@ -69,7 +69,7 @@ export default {
 </script>
 
 <template>
-  <section class="hero is-info is-large">
+  <section class="hero is-info is-fullheight">
     <div class="hero-head">
       <nav class="navbar">
         <div class="container">
@@ -101,18 +101,25 @@ export default {
         <div class="box chat"></div>
       </div>
     </div>
-
-    <div class="container">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-large" type="text" placeholder="Start typing..." />
+    <div class="hero-foot ">
+    <footer class="section is-small">
+      <div class="chatinput field has-addons ">
+        <div class="control is-expanded">
+          <input
+            class="input is-large"
+            type="text"
+            placeholder="Start typing a message here"
+          />
         </div>
         <div class="control">
-          <a class="button is-primary is-large"> Send </a>
+          <button class="button is-large is-primary">Send</button>
         </div>
       </div>
-    </div>
+    </footer>
+  </div>
   </section>
+
+  
 </template>
 
 <style>
