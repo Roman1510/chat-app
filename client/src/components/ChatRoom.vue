@@ -31,7 +31,7 @@ export default {
     }
     onBeforeMount(() => {
       currentUser.value = getCurrentUser().user
-      console.log(`oncreated was triggered ${currentUser.value}`)
+      console.log(`onbeforemount was triggered ${currentUser.value}`)
       logIn()
     })
     onUnmounted(() => {
@@ -97,38 +97,34 @@ export default {
     </div>
 
     <div class="hero-body">
-      <div class="chat box" style="height:100%;width:100%">
-
-      </div>
+      <div class="chat box"></div>
     </div>
     <div class="hero-foot">
-    <footer class="section is-small">
-      <div class="chatinput field has-addons ">
-        <div class="control is-expanded">
-          <input
-            class="input is-large"
-            type="text"
-            placeholder="Start typing a message here"
-          />
+      <footer class="my-2 mx-5">
+        <div class="chatinput field has-addons">
+          <div class="control is-expanded">
+            <input
+              v-model="message"
+              @click.enter.prevent="sendMessage"
+              autocomplete="off"
+              class="input is-large"
+              type="text"
+              placeholder="Write a message..."
+            />
+          </div>
+          <div class="control">
+            <button class="button is-large is-primary">Send</button>
+          </div>
         </div>
-        <div class="control">
-          <button class="button is-large is-primary">Send</button>
-        </div>
-      </div>
-    </footer>
-  </div>
+      </footer>
+    </div>
   </section>
-
-  
 </template>
 
 <style>
-html,
-body {
-  height: 100%;
-  overflow: hidden;
-}
+
 .chat {
-  min-height: 40rem;
+  width:100%;
+  min-height: 70vh;
 }
 </style>
