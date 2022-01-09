@@ -25,13 +25,14 @@ export default {
     const messagesArray = ref([])
     const currentUser = ref('')
     const isSendActive = ref(false)
-    // const currentRoom = ref('')
+    const currentRoom = ref('')
     const userList = ref([])
     const logIn = () => {
-      authWS(currentUser.value)
+      authWS(currentUser.value, currentRoom.value)
     }
     onBeforeMount(() => {
       currentUser.value = getCurrentUser().user
+      currentRoom.value = getCurrentUser().room
       console.log(`onbeforemount was triggered ${currentUser.value}`)
       logIn()
     })

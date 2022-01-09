@@ -3,10 +3,10 @@ import io from 'socket.io-client'
 const socket = io(process.env.VUE_APP_WS_URL)
 window.socket = socket
 
-export function authWS(username) {
+export function authWS(username,room) {
   if (username) {
     socket.open()
-    socket.emit('newUser', username)
+    socket.emit('newUser', {username,room})
   }
 }
 
