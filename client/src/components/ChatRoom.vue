@@ -48,9 +48,9 @@ export default {
       closeConnection()
       router.push('/')
     }
-    const updateMessages = (msg) => {
-      if (msg) {
-        messagesArray.value.push(msg)
+    const updateMessages = (message) => {
+      if (message) {
+        messagesArray.value.push(message)
       }
     }
     const updateUsersArray = (newUserList) => {
@@ -129,7 +129,7 @@ export default {
     <div class="hero-body">
       <div class="chat box">
         <p v-for="(item, index) in messagesArray" :key="index" class="chat-message" :class="addIsMe(item.user)">{{item.msg}}
-          <span class="chat-name">Roma, {{ '10:55' }}</span>
+          <span class="chat-name">Roma, {{ item.date }}</span>
         </p>
       </div>
     </div>

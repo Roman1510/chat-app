@@ -15,11 +15,11 @@ export function sendChatMessage(msg, user) {
 }
 
 export function getMessages(updateMessages) {
-  socket.on('message', (msg) => {
-    updateMessages({ ...msg, isNotification: false })
+  socket.on('message', (message) => {
+    updateMessages({ ...message, isNotification: false })
   })
-  socket.on('loggedIn', (msg) => {
-    updateMessages({ ...msg, isNotification: true })
+  socket.on('loggedIn', (message) => {
+    updateMessages({ ...message, isNotification: true })
   })
 }
 

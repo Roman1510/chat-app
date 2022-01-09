@@ -38,12 +38,16 @@ io.on('connection', (socket) => {
     io.to(room).emit('userList', users)
   })
 
+  // the messages from frontend:
   socket.on('chatMessage', (msg) => {
     const room = socket.room
-    console.log(users)
-    console.log(`${msg.msg} was sent from the user ${msg.user}`)
-    messages.push(msg)
-    io.to(room).emit('message', msg)
+    const currDate =  new Date().toLocaleTimeString('en-GB').substring(0,5)
+    const message = {...msg, date: currDate}
+
+    console.log(message)
+    console.log(`${message.msg} was sent from the user ${message.user}`)
+    messages.push(message)
+    io.to(room).emit('message', message)
   })
 })
 
