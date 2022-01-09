@@ -1,9 +1,14 @@
 <script>
 /*
-  1. add different 'rooms' functionality to backend to separete messages flows
-  2. add styling to messages (side of the username included)
-  3. add icon styling to the username (circle with initials)
-  4. deploy
+  1. chatbox overflow scroll css
+  2. chatbox automatic scrolling on new messages 
+  3. timestamp above message boxes
+  4. notification messages different styling (small font-size and class = message in bulma)
+  5. history (backend)
+  6. history (frontend) when we log in
+  7. add sounds to the messages (on send and on receive)   
+  8. icons in message boxes (circle initials)
+  9. deploy backend + frontend
   the rest is TBC
 */
 import {
