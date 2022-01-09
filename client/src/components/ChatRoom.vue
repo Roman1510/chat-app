@@ -65,6 +65,12 @@ export default {
         isSendActive.value=true
       }
     })
+
+    const addIsMe = (userName) => {
+      if(userName==currentUser.value){
+        return 'is-me'
+      }
+    }
     return {
       isSendActive,
       logIn,
@@ -74,6 +80,8 @@ export default {
       messagesArray,
       updateMessages,
       userList,
+      currentUser,
+      addIsMe
     }
   },
 }
@@ -114,23 +122,8 @@ export default {
 
     <div class="hero-body">
       <div class="chat box">
-        <p class="chat-message is-me">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          explicabo dolorum dolor voluptates, provident at autem nesciunt saepe
-          a eum iusto, quis expedita labore voluptate quasi sapiente esse hic
-          praesentium! Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Consectetur deserunt nulla, placeat rerum aperiam doloremque
-          accusantium necessitatibus officiis dolorem corrupti hic qui incidunt
-          tenetur aliquam laudantium possimus vero, dolore eveniet!
+        <p v-for="(item, index) in messagesArray" :key="index" class="chat-message" :class="addIsMe(item.user)">{{item.msg}}
           <span class="chat-name">Roma, {{ '10:55' }}</span>
-        </p>
-        <p class="chat-message is-me">
-          Lorem ipsum dolor sit amet consectetur adipisici
-          <span class="chat-name">Roma, {{ '10:55' }}</span>
-        </p>
-        <p class="chat-message">
-          Lorem ipsu eveniet!
-          <span class="chat-name">Asdf, {{ '10:57' }}</span>
         </p>
       </div>
     </div>
