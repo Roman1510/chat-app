@@ -165,15 +165,16 @@ export default {
 .chat {
   width: 100%;
   height: 70vh;
+  background-color: blanchedalmond;
 }
 
 .chat-message {
   position: relative;
   background-color: #916bbf;
-  color: white;
+  color: rgb(250, 236, 209);
   width: fit-content;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
   margin: 0.7em;
 }
 .chat-name {
