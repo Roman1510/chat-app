@@ -22,6 +22,7 @@ import { ref, onBeforeMount, onUnmounted, watch } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useRouter } from 'vue-router'
+// import _ from "lodash";
 export default {
   name: 'ChatRoom',
   setup() {
@@ -32,6 +33,7 @@ export default {
     const isSendActive = ref(false)
     const currentRoom = ref('')
     const userList = ref([])
+    const autoScroll = ref(null);
     const logIn = () => {
       authWS(currentUser.value, currentRoom.value)
     }
@@ -63,6 +65,13 @@ export default {
     }
     getMessages(updateMessages)
 
+    const scrollToElement = ()=>{
+    console.log(autoScroll.value)
+    if (autoScroll.value) {
+      autoScroll.value.scrollTop = autoScroll.value.scrollHeight
+    }
+  }
+
     watch(message,(newValue,oldValue)=>{
       if(!message.value){
         isSendActive.value=false
@@ -71,6 +80,10 @@ export default {
         isSendActive.value=true
       }
     })
+
+    watch(messagesArray, () =>{
+      scrollToElement()
+    },{ deep: true })
 
     const addIsMe = (userName) => {
       if(userName==currentUser.value){
@@ -87,7 +100,8 @@ export default {
       updateMessages,
       userList,
       currentUser,
-      addIsMe
+      addIsMe,
+      autoScroll
     }
   },
 }
@@ -127,11 +141,11 @@ export default {
     </div>
 
     <div class="hero-body">
-      <div class="chat box">
-        <p v-for="(item, index) in messagesArray" :key="index" class="chat-message" :class="addIsMe(item.user)">{{item.msg}}
+      <ul class="chat box" ref="autoScroll">
+        <li v-for="(item, index) in messagesArray" :key="index" class="chat-message" :class="addIsMe(item.user)">{{item.msg}}
           <span class="chat-name">Roma, {{ item.date }}</span>
-        </p>
-      </div>
+        </li>
+      </ul>
     </div>
     <div class="hero-foot">
       <footer class="my-2 mx-5">
@@ -165,7 +179,8 @@ export default {
 .chat {
   width: 100%;
   height: 70vh;
-  background-color: blanchedalmond;
+  background-color: white;
+  overflow: scroll;
 }
 
 .chat-message {
@@ -185,6 +200,7 @@ export default {
 
 .is-me {
   margin-left: auto;
-  background-color:hsl(171, 100%, 41%);
+  background-color: #80FFDB;
+  color: black;
 }
 </style>
