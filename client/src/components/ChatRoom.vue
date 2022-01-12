@@ -94,15 +94,15 @@ export default {
       { deep: true }
     )
 
-    const messageClass = (userName,isNotification) => {
+    const messageClass = (userName, isNotification) => {
       let result = ''
-      if(isNotification) {
-        result ="tag"
+      if (isNotification) {
+        result = 'tag'
       } else {
-        result ="chat-message"
+        result = 'chat-message'
       }
       if (userName == currentUser.value) {
-        result+= ' is-me'
+        result += ' is-me'
       }
       return result
     }
@@ -124,14 +124,11 @@ export default {
 </script>
 
 <template>
-  <section class="hero is-info is-fullheight">
+  <section class="hero is-info">
     <div class="hero-head">
       <nav class="navbar">
-        <div class="container">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <h1 class="title">Developer's lair</h1>
-            </div>
+          <div class="navbar-start">
+            <h1 class="title">Developer's lair</h1>
           </div>
           <div class="navbar-menu">
             <div class="navbar-end">
@@ -152,12 +149,12 @@ export default {
               </span>
             </div>
           </div>
-        </div>
+
       </nav>
     </div>
 
-    <div class="hero-body">
-      <ul class="chat box p-0" ref="autoScroll">
+    <div class="hero-body p-1 my-0 is-fullheight">
+      <ul class="chat box p-0 my-0 mx-0" ref="autoScroll">
         <li
           v-for="(item, index) in messagesArray"
           :key="index"
@@ -202,7 +199,7 @@ export default {
 <style lang="scss">
 .chat {
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   background-color: #ffeedd;
   overflow: scroll;
   scroll-behavior: smooth;
