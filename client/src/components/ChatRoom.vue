@@ -92,10 +92,17 @@ export default {
       { deep: true }
     )
 
-    const addIsMe = (userName) => {
-      if (userName == currentUser.value) {
-        return 'is-me'
+    const messageClass = (userName,isNotification) => {
+      let result = ''
+      if(isNotification) {
+        result ="tag"
+      } else {
+        result ="chat-message"
       }
+      if (userName == currentUser.value) {
+        result+= ' is-me'
+      }
+      return result
     }
     return {
       isSendActive,
@@ -107,7 +114,7 @@ export default {
       updateMessages,
       userList,
       currentUser,
-      addIsMe,
+      messageClass,
       autoScroll,
     }
   },
@@ -152,8 +159,7 @@ export default {
         <li
           v-for="(item, index) in messagesArray"
           :key="index"
-          class="chat-message"
-          :class="addIsMe(item.user)"
+          :class="messageClass(item.user, item.isNotification)"
         >
           {{ item.msg }}
           <span class="chat-name">Roma, {{ item.date }}</span>
