@@ -1,6 +1,8 @@
 <script>
 /*
-  3. notification messages different styling (small font-size and class = message in bulma)
+  1. make the 'you' pronoun in the chat
+  2. get rid of the pronoun when it's notification, show only time
+  3. fix styling for oneplus 7 pro (reduce the paddings and margins of the unused areas)
   4. history (backend)
   5. history (frontend) when we log in
   6. add sounds to the messages (on send and on receive)   

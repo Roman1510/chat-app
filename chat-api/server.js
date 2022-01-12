@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
 
     //notification to everyone except the current =>
     socket.to(user.room).emit('loggedIn', {
-      msg: `${user.username} joined the chat in the room ${user.room}`,
+      msg: `${user.username} joined the chat in this room`, date:currDate
     })
     io.to(user.room).emit('userList', users)
   })
