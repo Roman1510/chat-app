@@ -61,8 +61,10 @@ export default {
     }
     getUsers(updateUsersArray)
     const sendMessage = () => {
-      sendChatMessage(message.value, currentUser.value)
-      message.value = ''
+      if (isSendActive.value) {
+        sendChatMessage(message.value, currentUser.value)
+        message.value = ''
+      }
     }
     getMessages(updateMessages)
 
@@ -196,6 +198,7 @@ export default {
   height: 70vh;
   background-color: #ffeedd;
   overflow: scroll;
+  scroll-behavior: smooth;
 }
 
 .chat-message {
