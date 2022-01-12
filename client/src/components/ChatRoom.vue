@@ -33,7 +33,7 @@ export default {
     const isSendActive = ref(false)
     const currentRoom = ref('')
     const userList = ref([])
-    const autoScroll = ref(null);
+    const autoScroll = ref(null)
     const logIn = () => {
       authWS(currentUser.value, currentRoom.value)
     }
@@ -65,28 +65,32 @@ export default {
     }
     getMessages(updateMessages)
 
-    const scrollToElement = ()=>{
-    console.log(autoScroll.value)
-    if (autoScroll.value) {
-      autoScroll.value.scrollTop = autoScroll.value.scrollHeight
-    }
-  }
-
-    watch(message,(newValue,oldValue)=>{
-      if(!message.value){
-        isSendActive.value=false
+    const scrollToElement = () => {
+      console.log(autoScroll.value)
+      if (autoScroll.value) {
+        autoScroll.value.scrollTop = autoScroll.value.scrollHeight
       }
-      if(newValue!==oldValue&&message.value!=='') {
-        isSendActive.value=true
+    }
+
+    watch(message, (newValue, oldValue) => {
+      if (!message.value) {
+        isSendActive.value = false
+      }
+      if (newValue !== oldValue && message.value !== '') {
+        isSendActive.value = true
       }
     })
 
-    watch(messagesArray, () =>{
-      scrollToElement()
-    },{ deep: true })
+    watch(
+      messagesArray,
+      () => {
+        scrollToElement()
+      },
+      { deep: true }
+    )
 
     const addIsMe = (userName) => {
-      if(userName==currentUser.value){
+      if (userName == currentUser.value) {
         return 'is-me'
       }
     }
@@ -101,7 +105,7 @@ export default {
       userList,
       currentUser,
       addIsMe,
-      autoScroll
+      autoScroll,
     }
   },
 }
@@ -142,7 +146,13 @@ export default {
 
     <div class="hero-body">
       <ul class="chat box" ref="autoScroll">
-        <li v-for="(item, index) in messagesArray" :key="index" class="chat-message" :class="addIsMe(item.user)">{{item.msg}}
+        <li
+          v-for="(item, index) in messagesArray"
+          :key="index"
+          class="chat-message"
+          :class="addIsMe(item.user)"
+        >
+          {{ item.msg }}
           <span class="chat-name">Roma, {{ item.date }}</span>
         </li>
       </ul>
@@ -152,6 +162,7 @@ export default {
         <div class="chatinput field has-addons">
           <div class="control is-expanded">
             <input
+              style="background-color: #ffeedd"
               v-model="message"
               @keyup.enter.prevent="sendMessage"
               autocomplete="off"
@@ -164,9 +175,11 @@ export default {
             <button
               @click.prevent="sendMessage"
               class="button is-large"
-              :class="{'is-primary':isSendActive}"
+              :class="{ 'is-primary': isSendActive }"
             >
-              Send
+              <span class="icon">
+                <i class="fas fa-paper-plane"></i>
+              </span>
             </button>
           </div>
         </div>
@@ -179,7 +192,7 @@ export default {
 .chat {
   width: 100%;
   height: 70vh;
-  background-color: white;
+  background-color: #ffeedd;
   overflow: scroll;
 }
 
@@ -195,12 +208,13 @@ export default {
 .chat-name {
   color: black;
   font-size: 0.8rem;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .is-me {
   margin-left: auto;
-  background-color: #80FFDB;
+  background-color: #80ffdb;
   color: black;
 }
+
 </style>
