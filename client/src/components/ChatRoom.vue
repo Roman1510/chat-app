@@ -1,14 +1,12 @@
 <script>
 /*
-  1. chatbox overflow scroll css
-  2. chatbox automatic scrolling on new messages 
-  3. timestamp above message boxes
-  4. notification messages different styling (small font-size and class = message in bulma)
-  5. history (backend)
-  6. history (frontend) when we log in
-  7. add sounds to the messages (on send and on receive)   
-  8. icons in message boxes (circle initials)
-  9. deploy backend + frontend
+  2. timestamp above message boxes
+  3. notification messages different styling (small font-size and class = message in bulma)
+  4. history (backend)
+  5. history (frontend) when we log in
+  6. add sounds to the messages (on send and on receive)   
+  7. icons in message boxes (circle initials)
+  8. deploy backend + frontend
   the rest is TBC
 */
 import {
@@ -18,7 +16,7 @@ import {
   getUsers,
   closeConnection,
 } from '../utilities/SocketConnect'
-import { ref, onBeforeMount, onUnmounted, watch } from 'vue'
+import { ref, onBeforeMount, onUnmounted, watch, onMounted } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useRouter } from 'vue-router'
@@ -43,9 +41,12 @@ export default {
       console.log(`onbeforemount was triggered ${currentUser.value}`)
       logIn()
     })
-    onUnmounted(() => {
-      closeConnection()
-    })
+    onMounted(() => {
+      scrollToElement()
+    }),
+      onUnmounted(() => {
+        closeConnection()
+      })
     const logOut = () => {
       closeConnection()
       router.push('/')
@@ -66,7 +67,6 @@ export default {
     getMessages(updateMessages)
 
     const scrollToElement = () => {
-      console.log(autoScroll.value)
       if (autoScroll.value) {
         autoScroll.value.scrollTop = autoScroll.value.scrollHeight
       }
@@ -84,7 +84,9 @@ export default {
     watch(
       messagesArray,
       () => {
-        scrollToElement()
+        setTimeout(() => {
+          scrollToElement()
+        }, 50)
       },
       { deep: true }
     )
@@ -145,7 +147,7 @@ export default {
     </div>
 
     <div class="hero-body">
-      <ul class="chat box" ref="autoScroll">
+      <ul class="chat box p-0" ref="autoScroll">
         <li
           v-for="(item, index) in messagesArray"
           :key="index"
@@ -216,5 +218,4 @@ export default {
   background-color: #80ffdb;
   color: black;
 }
-
 </style>
