@@ -21,6 +21,9 @@ export function getMessages(updateMessages) {
   socket.on('loggedIn', (message) => {
     updateMessages({ ...message, isNotification: true })
   })
+  socket.on('userDisconnect', (message) => {
+    updateMessages({ ...message, isNotification: true })
+  })
 }
 
 export function getUsers(updateUsersArray) {

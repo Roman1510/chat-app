@@ -2,12 +2,11 @@
 /*
   1. make the 'you' pronoun in the chat
   2. get rid of the pronoun when it's notification, show only time
-  3. fix styling for oneplus 7 pro (reduce the paddings and margins of the unused areas)
-  4. history (backend)
-  5. history (frontend) when we log in
-  6. add sounds to the messages (on send and on receive)   
-  7. icons in message boxes (circle initials)
-  8. deploy backend + frontend
+  3. history (backend)
+  4. history (frontend) when we log in
+  5. add sounds to the messages (on send and on receive)   
+  6. icons in message boxes (circle initials)
+  7. deploy backend + frontend
   the rest is TBC
 */
 import {
@@ -127,29 +126,28 @@ export default {
   <section class="hero is-info">
     <div class="hero-head">
       <nav class="navbar">
-          <div class="navbar-start">
-            <h1 class="title">Developer's lair</h1>
+        <div class="navbar-start">
+          <h1 class="title">Developer's lair</h1>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item is-active">Choose avatar</a>
+            <a
+              class="navbar-item"
+              href="https://github.com/Roman1510/chat-app"
+              target="_blank"
+              >Source code</a
+            >
+            <span class="navbar-item">
+              <a @click.prevent="logOut" class="button is-info is-inverted">
+                <span class="icon">
+                  <i class="fas fa-sign-out-alt"></i>
+                </span>
+                <span>Log out</span>
+              </a>
+            </span>
           </div>
-          <div class="navbar-menu">
-            <div class="navbar-end">
-              <a class="navbar-item is-active">Choose avatar</a>
-              <a
-                class="navbar-item"
-                href="https://github.com/Roman1510/chat-app"
-                target="_blank"
-                >Source code</a
-              >
-              <span class="navbar-item">
-                <a @click.prevent="logOut" class="button is-info is-inverted">
-                  <span class="icon">
-                    <i class="fas fa-sign-out-alt"></i>
-                  </span>
-                  <span>Log out</span>
-                </a>
-              </span>
-            </div>
-          </div>
-
+        </div>
       </nav>
     </div>
 
@@ -161,7 +159,16 @@ export default {
           :class="messageClass(item.user, item.isNotification)"
         >
           {{ item.msg }}
-          <span class="chat-name">Roma, {{ item.date }}</span>
+          <span class="chat-name"
+            >{{
+              item.isNotification
+                ? ''
+                : item.user == currentUser
+                ? 'You, '
+                : `${item.user}, `
+            }}
+            {{ item.date }}</span
+          >
         </li>
       </ul>
     </div>
@@ -206,7 +213,6 @@ export default {
 }
 
 .chat-message {
-  position: relative;
   background-color: #916bbf;
   color: rgb(250, 236, 209);
   width: fit-content;
