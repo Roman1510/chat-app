@@ -11,6 +11,7 @@ const messages = []
 const users = []
 
 io.on('connection', (socket) => {
+  const currDate =  new Date().toLocaleTimeString('en-GB').substring(0,5)
   socket.on('newUser', (user) => {
     users.push(user.username)
     socket.username = user.username
@@ -18,7 +19,7 @@ io.on('connection', (socket) => {
     socket.join(user.room)
 
     //message to a current client =>
-    io.to(socket.id).emit('loggedIn', { msg: `WELCOME ${user.username}!` })
+    io.to(socket.id).emit('loggedIn', { msg: `WELCOME ${user.username}!`,  date: currDate })
 
     //notification to everyone except the current =>
     socket.to(user.room).emit('loggedIn', {
@@ -41,7 +42,6 @@ io.on('connection', (socket) => {
   // the messages from frontend:
   socket.on('chatMessage', (msg) => {
     const room = socket.room
-    const currDate =  new Date().toLocaleTimeString('en-GB').substring(0,5)
     const message = {...msg, date: currDate}
 
     console.log(message)

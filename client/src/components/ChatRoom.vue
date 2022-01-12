@@ -1,6 +1,5 @@
 <script>
 /*
-  2. timestamp above message boxes
   3. notification messages different styling (small font-size and class = message in bulma)
   4. history (backend)
   5. history (frontend) when we log in
