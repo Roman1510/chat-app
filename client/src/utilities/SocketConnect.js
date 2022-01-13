@@ -26,10 +26,10 @@ export function getMessages(updateMessages) {
   })
 }
 
-export function getUsers(updateUsersArray) {
-  socket.on('userList', (userList) => {
-    console.log(userList)
-    updateUsersArray(userList)
+export function getChatInfo(updateUsersArray,updateMessagesArray) {
+  socket.on('userList', (chatInfo) => {
+    updateUsersArray(chatInfo.users)
+    updateMessagesArray(chatInfo.messages)
   })
 }
 

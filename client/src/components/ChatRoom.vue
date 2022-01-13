@@ -1,19 +1,17 @@
 <script>
 /*
-  1. make the 'you' pronoun in the chat
-  2. get rid of the pronoun when it's notification, show only time
-  3. history (backend)
-  4. history (frontend) when we log in
-  5. add sounds to the messages (on send and on receive)   
-  6. icons in message boxes (circle initials)
-  7. deploy backend + frontend
+  1. history (backend)
+  2. history (frontend) when we log in
+  3. add sounds to the messages (on send and on receive)   
+  4. icons in message boxes (circle initials)
+  5. deploy backend + frontend
   the rest is TBC
 */
 import {
   sendChatMessage,
   getMessages,
   authWS,
-  getUsers,
+  getChatInfo,
   closeConnection,
 } from '../utilities/SocketConnect'
 import { ref, onBeforeMount, onUnmounted, watch, onMounted } from 'vue'
@@ -31,6 +29,7 @@ export default {
     const isSendActive = ref(false)
     const currentRoom = ref('')
     const userList = ref([])
+    window.userList = userList.value
     const autoScroll = ref(null)
     const logIn = () => {
       authWS(currentUser.value, currentRoom.value)
@@ -59,7 +58,10 @@ export default {
     const updateUsersArray = (newUserList) => {
       userList.value = [...newUserList]
     }
-    getUsers(updateUsersArray)
+    const updateMessagesArray = (newMessagesList) => {
+      messagesArray.value = [...newMessagesList]
+    }
+    getChatInfo(updateUsersArray, updateMessagesArray)
     const sendMessage = () => {
       if (isSendActive.value) {
         sendChatMessage(message.value, currentUser.value)
@@ -207,7 +209,7 @@ export default {
 .chat {
   width: 100%;
   height: 80vh;
-  background-color: #ffeedd;
+  background-color: #cee3e0;
   overflow: scroll;
   scroll-behavior: smooth;
 }

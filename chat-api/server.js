@@ -18,18 +18,20 @@ io.on('connection', (socket) => {
     socket.room = user.room
     socket.join(user.room)
 
-    //message to a current client =>
+    //emitting to a current client =>
     io.to(socket.id).emit('loggedIn', {
       msg: `WELCOME ${user.username}!`,
       date: currDate,
     })
 
-    //notification to everyone except the current =>
+    //emitting to everyone except the current =>
     socket.to(user.room).emit('loggedIn', {
       msg: `${user.username} joined the chat in this room`,
       date: currDate,
     })
-    io.to(user.room).emit('userList', users)
+
+    //emitting to everyone =>
+    io.to(user.room).emit('userList', { messages, users })
   })
 
   socket.on('disconnect', () => {
@@ -41,7 +43,7 @@ io.on('connection', (socket) => {
     }
     io.to(room).emit('userDisconnect', {
       msg: `User ${socket.username} has left the chat`,
-      date: currDate
+      date: currDate,
     })
     io.to(room).emit('userList', users)
   })
