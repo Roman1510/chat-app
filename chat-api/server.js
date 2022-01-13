@@ -18,17 +18,20 @@ io.on('connection', (socket) => {
     socket.room = user.room
     socket.join(user.room)
 
+    const message = {
+      msg: `${socket.username} joined the chat in this room`,
+      date: currDate,
+      user:'system'
+    }
     //emitting to a current client =>
     io.to(socket.id).emit('loggedIn', {
       msg: `WELCOME ${user.username}!`,
       date: currDate,
+      user: 'system'
     })
 
     //emitting to everyone except the current =>
-    socket.to(user.room).emit('loggedIn', {
-      msg: `${user.username} joined the chat in this room`,
-      date: currDate,
-    })
+    socket.to(user.room).emit('loggedIn', message)
 
     //emitting to everyone =>
     io.to(user.room).emit('userList', { messages, users })
@@ -36,16 +39,22 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     const room = socket.room
-    console.log(`${socket.username} left`)
-    var toDelete = users.indexOf(socket.username)
+    const username = socket.username
+    const message = {
+      msg: `User ${username} has left the chat`,
+      date: currDate,
+      user:username
+    }
+    console.log(`${username} left`)
+    var toDelete = users.indexOf(username)
     if (toDelete !== -1) {
       users.splice(toDelete, 1)
     }
-    io.to(room).emit('userDisconnect', {
-      msg: `User ${socket.username} has left the chat`,
-      date: currDate,
-    })
-    io.to(room).emit('userList', users)
+    messages.push(message)
+    io.to(room).emit('userDisconnect', message)
+
+    //i think this one should be refactored to the generic logic (with model)
+    io.to(room).emit('userList', { users, messages })
   })
 
   // the messages from frontend:

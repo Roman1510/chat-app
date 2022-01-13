@@ -26,10 +26,10 @@ export function getMessages(updateMessages) {
   })
 }
 
-export function getChatInfo(updateUsersArray,updateMessagesArray) {
+export function getChatInfo(updateUsersArray,/*updateMessagesArray*/) {
   socket.on('userList', (chatInfo) => {
     updateUsersArray(chatInfo.users)
-    updateMessagesArray(chatInfo.messages)
+    // updateMessagesArray(chatInfo.messages) i shouldn't use this here, since it should be the separate logic, only when logging in. (not this event for sure)
   })
 }
 
