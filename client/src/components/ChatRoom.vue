@@ -5,6 +5,9 @@
   3. add sounds to the messages (on send and on receive)   
   4. icons in message boxes (circle initials)
   5. deploy backend + frontend
+  6. add the list of current users online in the room (front)
+  7. fix the bugs with some user's duplication
+
   the rest is TBC
 */
 import {
