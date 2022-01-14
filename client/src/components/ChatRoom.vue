@@ -32,7 +32,7 @@ export default {
     const isSendActive = ref(false)
     const currentRoom = ref('')
     const userList = ref([])
-    window.userList = userList.value
+    window.userList = userList
     const autoScroll = ref(null)
     const logIn = () => {
       authWS(currentUser.value, currentRoom.value)
@@ -40,20 +40,20 @@ export default {
     onBeforeMount(() => {
       currentUser.value = getCurrentUser().user
       currentRoom.value = getCurrentUser().room
-      console.log(`onbeforemount was triggered ${currentUser.value}`)
       logIn()
     })
     onMounted(() => {
       scrollToElement()
-    }),
-      onUnmounted(() => {
-        closeConnection()
-      })
+    })
+    onUnmounted(() => {
+
+    })
     const logOut = () => {
       closeConnection()
       router.push('/')
     }
-    const updateMessages = (message) => {
+    const addMessage = (message) => {
+      window.messagesArray = messagesArray
       if (message) {
         messagesArray.value.push(message)
       }
@@ -62,16 +62,17 @@ export default {
       userList.value = [...newUserList]
     }
     const updateMessagesArray = (newMessagesList) => {
+      console.log(newMessagesList)
       messagesArray.value = [...newMessagesList]
     }
-    getChatInfo(updateUsersArray, updateMessagesArray)
+    getChatInfo(updateUsersArray)
     const sendMessage = () => {
       if (isSendActive.value) {
         sendChatMessage(message.value, currentUser.value)
         message.value = ''
       }
     }
-    getMessages(updateMessages)
+    getMessages(addMessage, updateMessagesArray)
 
     const scrollToElement = () => {
       if (autoScroll.value) {
@@ -117,7 +118,7 @@ export default {
       message,
       sendMessage,
       messagesArray,
-      updateMessages,
+      updateMessagesArray,
       userList,
       currentUser,
       messageClass,

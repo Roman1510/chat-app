@@ -11,8 +11,10 @@ const messages = []
 const users = []
 
 io.on('connection', (socket) => {
+  console.log(`new connection was established =>`)
   const currDate = new Date().toLocaleTimeString('en-GB').substring(0, 5)
   socket.on('newUser', (user) => {
+    console.log(`newUser event was triggered with the user ${user.username}`)
     users.push(user.username)
     socket.username = user.username
     socket.room = user.room
@@ -34,7 +36,8 @@ io.on('connection', (socket) => {
     socket.to(user.room).emit('loggedIn', message)
 
     //emitting to everyone =>
-    io.to(user.room).emit('userList', { messages, users })
+    io.to(user.room).emit('messagesList', messages)
+    io.to(user.room).emit('userList', { users })
   })
 
   socket.on('disconnect', () => {
@@ -54,15 +57,13 @@ io.on('connection', (socket) => {
     io.to(room).emit('userDisconnect', message)
 
     //i think this one should be refactored to the generic logic (with model)
-    io.to(room).emit('userList', { users, messages })
+    io.to(room).emit('userList', { users })
   })
 
   // the messages from frontend:
   socket.on('chatMessage', (msg) => {
     const room = socket.room
     const message = { ...msg, date: currDate }
-
-    console.log(message)
     console.log(`${message.msg} was sent from the user ${message.user}`)
     messages.push(message)
     io.to(room).emit('message', message)
