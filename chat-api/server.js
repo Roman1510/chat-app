@@ -46,7 +46,8 @@ io.on('connection', (socket) => {
     const message = {
       msg: `User ${username} has left the chat`,
       date: currDate,
-      user:username
+      user:username,
+      isNotification: true
     }
     console.log(`${username} left`)
     var toDelete = users.indexOf(username)
@@ -63,7 +64,7 @@ io.on('connection', (socket) => {
   // the messages from frontend:
   socket.on('chatMessage', (msg) => {
     const room = socket.room
-    const message = { ...msg, date: currDate }
+    const message = { ...msg, date: currDate, user: socket.username, isNotification: false }
     console.log(`${message.msg} was sent from the user ${message.user}`)
     messages.push(message)
     io.to(room).emit('message', message)
