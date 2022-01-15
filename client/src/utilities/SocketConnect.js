@@ -19,11 +19,13 @@ export function getMessages(updateSigleMessage, updateMessagesArray) {
     updateSigleMessage({ ...message, isNotification: false })
   })
   socket.on('loggedIn', (message) => {
+    console.log('logged in the new user ', message)
     updateSigleMessage({ ...message, isNotification: true })
   })
   socket.on('userDisconnect', (message) => {
     updateSigleMessage({ ...message, isNotification: true })
   })
+  //here i should make it run only once per request, not every time the messages array is changed ***
   socket.on('messagesList', (messages) => {
     updateMessagesArray(messages)
   })

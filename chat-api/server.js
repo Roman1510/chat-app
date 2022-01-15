@@ -54,7 +54,6 @@ io.on('connection', (socket) => {
     if (toDelete !== -1) {
       users.splice(toDelete, 1)
     }
-    messages.push(message)
     io.to(room).emit('userDisconnect', message)
 
     //i think this one should be refactored to the generic logic (with model)
