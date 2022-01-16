@@ -1,7 +1,6 @@
 <script>
 /*
-  1. history (backend)
-  2. history (frontend) when we log in
+  1. make notifications visible when logging in back (event, socketio proper usage)
   3. add sounds to the messages (on send and on receive)   
   4. icons in message boxes (circle initials)
   5. deploy backend + frontend
@@ -62,8 +61,10 @@ export default {
       userList.value = [...newUserList]
     }
     const updateMessagesArray = (newMessagesList) => {
-      console.log(newMessagesList)
-      messagesArray.value = [...newMessagesList]
+      console.log('newmessarr', messagesArray.value)
+      messagesArray.value = [...newMessagesList].filter(item=>{
+        return item.isNotification==false
+      })
     }
     getChatInfo(updateUsersArray)
     const sendMessage = () => {

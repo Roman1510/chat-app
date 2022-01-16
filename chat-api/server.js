@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
 
     //emitting to everyone except the current =>
     socket.to(user.room).emit('loggedIn', message)
-
+    messages.push(message)
     //emitting to everyone =>
     io.to(user.room).emit('messagesList', messages)
     io.to(user.room).emit('userList', { users })
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
       users.splice(toDelete, 1)
     }
     io.to(room).emit('userDisconnect', message)
-
+    messages.push(message)
     //i think this one should be refactored to the generic logic (with model)
     io.to(room).emit('userList', { users })
   })
