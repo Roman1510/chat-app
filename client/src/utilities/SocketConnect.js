@@ -14,7 +14,7 @@ export function sendChatMessage(msg, user) {
   socket.emit('chatMessage', { msg: msg, user: user })
 }
 
-export function getMessages(updateSigleMessage, updateMessagesArray) {
+export function getMessages(updateSigleMessage) {
   socket.on('message', (message) => {
     updateSigleMessage({ ...message, isNotification: false })
   })
@@ -25,10 +25,7 @@ export function getMessages(updateSigleMessage, updateMessagesArray) {
   socket.on('userDisconnect', (message) => {
     updateSigleMessage({ ...message, isNotification: true })
   })
-  //here i should make it run only once per request, not every time the messages array is changed ***
-  socket.on('messagesList', (messages) => {
-    updateMessagesArray(messages)
-  })
+  //here i should make it run only once per request, not every time the messages array is 
 }
 
 export function getChatInfo(updateUsersArray) {
@@ -39,4 +36,12 @@ export function getChatInfo(updateUsersArray) {
 
 export function closeConnection() {
   socket.close()
+}
+
+export function getMessagesArray() {
+  var messagesArray = []
+  socket.on('messagesList', (messages) => {
+    messagesArray = messages
+  })
+  return messagesArray
 }

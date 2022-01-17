@@ -15,6 +15,7 @@ import {
   authWS,
   getChatInfo,
   closeConnection,
+  getMessagesArray,
 } from '../utilities/SocketConnect'
 import { ref, onBeforeMount, onUnmounted, watch, onMounted } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
@@ -40,13 +41,12 @@ export default {
       currentUser.value = getCurrentUser().user
       currentRoom.value = getCurrentUser().room
       logIn()
+      getMessagesArray()
     })
     onMounted(() => {
       scrollToElement()
     })
-    onUnmounted(() => {
-
-    })
+    onUnmounted(() => {})
     const logOut = () => {
       closeConnection()
       router.push('/')
@@ -62,8 +62,8 @@ export default {
     }
     const updateMessagesArray = (newMessagesList) => {
       console.log('newmessarr', messagesArray.value)
-      messagesArray.value = [...newMessagesList].filter(item=>{
-        return item.isNotification==false
+      messagesArray.value = [...newMessagesList].filter((item) => {
+        return item.isNotification == false
       })
     }
     getChatInfo(updateUsersArray)
@@ -73,7 +73,7 @@ export default {
         message.value = ''
       }
     }
-    getMessages(addMessage, updateMessagesArray)
+    getMessages(addMessage)
 
     const scrollToElement = () => {
       if (autoScroll.value) {
