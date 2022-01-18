@@ -10,13 +10,10 @@ export function authWS(username, room) {
   }
 }
 
-export function getHistory() {
-  let messageArr = []
+export function getHistory(cb) {
   socket.emit('getHistory', (answer) => {
-    console.log('the array with messages was received', answer)
-    messageArr = answer
+    cb(answer)
   })
-  return messageArr
 }
 
 export function sendChatMessage(msg, user) {

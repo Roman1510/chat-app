@@ -26,7 +26,7 @@ export default {
   setup() {
     const router = useRouter()
     const message = ref('')
-    const messagesArray = ref(getHistory())
+    const messagesArray = ref([])
     const currentUser = ref('')
     const isSendActive = ref(false)
     const currentRoom = ref('')
@@ -40,6 +40,7 @@ export default {
       currentUser.value = getCurrentUser().user
       currentRoom.value = getCurrentUser().room
       logIn()
+      getHistory((anser)=>{console.log(anser)})
     })
     onMounted(() => {
       scrollToElement()
