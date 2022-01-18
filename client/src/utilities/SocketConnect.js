@@ -10,6 +10,15 @@ export function authWS(username, room) {
   }
 }
 
+export function getHistory() {
+  let messageArr = []
+  socket.emit('getHistory', (answer) => {
+    console.log('the array with messages was received', answer)
+    messageArr = answer
+  })
+  return messageArr
+}
+
 export function sendChatMessage(msg, user) {
   socket.emit('chatMessage', { msg: msg, user: user })
 }
@@ -19,13 +28,12 @@ export function getMessages(updateSigleMessage) {
     updateSigleMessage({ ...message, isNotification: false })
   })
   socket.on('loggedIn', (message) => {
-    console.log('logged in the new user ', message)
     updateSigleMessage({ ...message, isNotification: true })
   })
   socket.on('userDisconnect', (message) => {
     updateSigleMessage({ ...message, isNotification: true })
   })
-  //here i should make it run only once per request, not every time the messages array is 
+  //here i should make it run only once per request, not every time the messages array is
 }
 
 export function getChatInfo(updateUsersArray) {
@@ -36,12 +44,4 @@ export function getChatInfo(updateUsersArray) {
 
 export function closeConnection() {
   socket.close()
-}
-
-export function getMessagesArray() {
-  var messagesArray = []
-  socket.on('messagesList', (messages) => {
-    messagesArray = messages
-  })
-  return messagesArray
 }

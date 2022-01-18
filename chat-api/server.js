@@ -36,7 +36,6 @@ io.on('connection', (socket) => {
     socket.to(user.room).emit('loggedIn', message)
     messages.push(message)
     //emitting to everyone =>
-    io.to(user.room).emit('messagesList', messages)
     io.to(user.room).emit('userList', { users })
   })
 
@@ -67,6 +66,13 @@ io.on('connection', (socket) => {
     console.log(`${message.msg} was sent from the user ${message.user}`)
     messages.push(message)
     io.to(room).emit('message', message)
+  })
+
+
+  socket.on('getHistory',function(callback){
+    if(callback){
+      callback(messages)
+    }
   })
 })
 

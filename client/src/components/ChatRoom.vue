@@ -12,22 +12,21 @@
 import {
   sendChatMessage,
   getMessages,
+  getHistory,
   authWS,
   getChatInfo,
   closeConnection,
-  getMessagesArray,
 } from '../utilities/SocketConnect'
 import { ref, onBeforeMount, onUnmounted, watch, onMounted } from 'vue'
 import { getCurrentUser } from '../utilities/UserData'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useRouter } from 'vue-router'
-// import _ from "lodash";
 export default {
   name: 'ChatRoom',
   setup() {
     const router = useRouter()
     const message = ref('')
-    const messagesArray = ref([])
+    const messagesArray = ref(getHistory())
     const currentUser = ref('')
     const isSendActive = ref(false)
     const currentRoom = ref('')
@@ -41,7 +40,6 @@ export default {
       currentUser.value = getCurrentUser().user
       currentRoom.value = getCurrentUser().room
       logIn()
-      getMessagesArray()
     })
     onMounted(() => {
       scrollToElement()
@@ -60,12 +58,7 @@ export default {
     const updateUsersArray = (newUserList) => {
       userList.value = [...newUserList]
     }
-    const updateMessagesArray = (newMessagesList) => {
-      console.log('newmessarr', messagesArray.value)
-      messagesArray.value = [...newMessagesList].filter((item) => {
-        return item.isNotification == false
-      })
-    }
+
     getChatInfo(updateUsersArray)
     const sendMessage = () => {
       if (isSendActive.value) {
@@ -119,7 +112,6 @@ export default {
       message,
       sendMessage,
       messagesArray,
-      updateMessagesArray,
       userList,
       currentUser,
       messageClass,
